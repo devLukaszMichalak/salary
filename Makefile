@@ -1,6 +1,6 @@
-.PHONY: all frontend backend  # Declare 'phony' targets (not real files)
+.PHONY: all frontend backend
 
-all: frontend backend  # The 'all' target depends on frontend and backend
+all: frontend backend
 
 frontend:
 	@echo "============================ Started frontend build. ============================"
