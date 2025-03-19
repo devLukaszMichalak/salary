@@ -1,0 +1,13 @@
+{
+  "singleQuote": true,
+  "semi": true,
+  "bracketSameLine": true,
+  "arrowParens": "avoid",
+  "trailingComma": "none",
+  "htmlWhitespaceSensitivity": "ignore",
+  "plugins": [
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-package",
+    "prettier-plugin-organize-attributes"
+  ]
+}

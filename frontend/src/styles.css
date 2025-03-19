@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+@plugin "daisyui";
+
+.ngneat-dialog-content {
+  @apply !bg-base-100;
+}
