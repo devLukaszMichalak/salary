@@ -1,5 +1,6 @@
 {
   "name": "frontend",
+  "author": "Łukasz Michalak (https://github.com/devLukaszMichalak)",
   "version": "0.0.0",
   "scripts": {
     "build": "ng build",
