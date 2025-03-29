@@ -1,34 +1,54 @@
-package dev.lukaszmichalak.salary.salary;
+package dev.lukaszmichalak.salary.employee;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import lombok.AccessLevel;
 import lombok.Getter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SourceType;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.*;
 import org.hibernate.proxy.HibernateProxy;
 
+@Getter
 @Entity
-@Getter(AccessLevel.PACKAGE)
-@Table(
-    name = "salaries",
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"year", "employee_id"})})
-class Salary {
+@NoArgsConstructor
+@Table(name = "employees")
+@NamedEntityGraph(
+    name = "Employee.full",
+    attributeNodes = {@NamedAttributeNode("position"), @NamedAttributeNode("agency")})
+class Employee {
+
+  Employee(String name, Position position, Agency agency) {
+    this.name = name;
+    this.position = position;
+    this.agency = agency;
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "year", nullable = false)
-  private int year;
+  @Column(name = "name", nullable = false, unique = true)
+  private String name;
 
-  @Column(name = "yearly_gross_pay", nullable = false)
-  private double yearlyGrossPay;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @Cascade(CascadeType.PERSIST)
+  @JoinColumn(name = "position_id", nullable = false)
+  private Position position;
 
-  @Column(name = "employee_id", nullable = false)
-  private long employeeId;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @Cascade(CascadeType.PERSIST)
+  @JoinColumn(name = "agency_id", nullable = false)
+  private Agency agency;
 
   @CreationTimestamp(source = SourceType.DB)
   @Column(name = "creation_date", nullable = false, updatable = false)
@@ -51,8 +71,8 @@ class Salary {
             ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass()
             : this.getClass();
     if (thisEffectiveClass != oEffectiveClass) return false;
-    Salary salary = (Salary) o;
-    return getId() != null && Objects.equals(getId(), salary.getId());
+    Employee employee = (Employee) o;
+    return getId() != null && Objects.equals(getId(), employee.getId());
   }
 
   @Override
@@ -69,14 +89,8 @@ class Salary {
         + "id = "
         + id
         + ", "
-        + "year = "
-        + year
-        + ", "
-        + "yearlyGrossPay = "
-        + yearlyGrossPay
-        + ", "
-        + "employeeId = "
-        + employeeId
+        + "name = "
+        + name
         + ", "
         + "creationDate = "
         + creationDate

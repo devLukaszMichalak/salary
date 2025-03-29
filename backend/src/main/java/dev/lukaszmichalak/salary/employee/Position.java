@@ -1,34 +1,32 @@
-package dev.lukaszmichalak.salary.salary;
+package dev.lukaszmichalak.salary.employee;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
 
+@Getter
 @Entity
-@Getter(AccessLevel.PACKAGE)
-@Table(
-    name = "salaries",
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"year", "employee_id"})})
-class Salary {
+@Table(name = "positions")
+@NoArgsConstructor
+class Position {
+
+  Position(String title) {
+    this.title = title;
+  }
 
   @Id
+  @Column(name = "id", nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "year", nullable = false)
-  private int year;
-
-  @Column(name = "yearly_gross_pay", nullable = false)
-  private double yearlyGrossPay;
-
-  @Column(name = "employee_id", nullable = false)
-  private long employeeId;
+  @Column(name = "title", nullable = false, unique = true)
+  private String title;
 
   @CreationTimestamp(source = SourceType.DB)
   @Column(name = "creation_date", nullable = false, updatable = false)
@@ -51,8 +49,8 @@ class Salary {
             ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass()
             : this.getClass();
     if (thisEffectiveClass != oEffectiveClass) return false;
-    Salary salary = (Salary) o;
-    return getId() != null && Objects.equals(getId(), salary.getId());
+    Position position = (Position) o;
+    return getId() != null && Objects.equals(getId(), position.getId());
   }
 
   @Override
@@ -69,14 +67,8 @@ class Salary {
         + "id = "
         + id
         + ", "
-        + "year = "
-        + year
-        + ", "
-        + "yearlyGrossPay = "
-        + yearlyGrossPay
-        + ", "
-        + "employeeId = "
-        + employeeId
+        + "title = "
+        + title
         + ", "
         + "creationDate = "
         + creationDate

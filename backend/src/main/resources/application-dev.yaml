@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:salary-dev.db
+  jpa:
+    show-sql: true

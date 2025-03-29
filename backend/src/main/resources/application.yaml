@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: backend
+
+  datasource:
+    url: jdbc:sqlite:salary.db?busy_timeout=3000
+    driver-class-name: org.sqlite.JDBC
+
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:/data-samples.sql
+      schema-locations: classpath:/schema.sql
+      continue-on-error: false
+
+  jpa:
+    show-sql: true
+    open-in-view: true
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: none
