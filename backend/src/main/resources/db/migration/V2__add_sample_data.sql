@@ -1,7 +1,7 @@
-INSERT OR IGNORE INTO agencies (name, last_update_date)
+INSERT INTO agencies (name, last_update_date)
 VALUES ('AGRICULTURE', CURRENT_TIMESTAMP);
 
-INSERT OR IGNORE INTO positions (title, last_update_date)
+INSERT INTO positions (title, last_update_date)
 VALUES ('ACCOUNTANT II', CURRENT_TIMESTAMP),
        ('ACCOUNTANT', CURRENT_TIMESTAMP),
        ('ACCOUNTING GENERALIST II', CURRENT_TIMESTAMP),
@@ -10,7 +10,7 @@ VALUES ('ACCOUNTANT II', CURRENT_TIMESTAMP),
        ('ADMIN SUPPORT ASSISTANT', CURRENT_TIMESTAMP),
        ('ADMIN SUPPORT PROFESSIONAL', CURRENT_TIMESTAMP);
 
-INSERT OR IGNORE INTO employees (name, position_id, agency_id, last_update_date)
+INSERT INTO employees (name, position_id, agency_id, last_update_date)
 VALUES ('KLEINDIENST, ANGELA F', (SELECT id FROM positions WHERE title = 'ACCOUNTANT II'),
         (SELECT id FROM agencies WHERE name = 'AGRICULTURE'), CURRENT_TIMESTAMP),
        ('WALKER, JOE E.', (SELECT id FROM positions WHERE title = 'ACCOUNTANT II'),
@@ -22,7 +22,7 @@ VALUES ('KLEINDIENST, ANGELA F', (SELECT id FROM positions WHERE title = 'ACCOUN
        ('ARNOLD, CAROL ANN', (SELECT id FROM positions WHERE title = 'ACCOUNTING GENERALIST II'),
         (SELECT id FROM agencies WHERE name = 'AGRICULTURE'), CURRENT_TIMESTAMP);
 
-INSERT OR IGNORE INTO salaries (year, yearly_gross_pay, employee_id, last_update_date)
+INSERT INTO salaries (year, yearly_gross_pay, employee_id, last_update_date)
 VALUES (2020, 23769.77, (SELECT id
                          FROM employees
                          WHERE name = 'KLEINDIENST, ANGELA F'

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS agencies
+CREATE TABLE agencies
 (
     id               INTEGER PRIMARY KEY AUTOINCREMENT,
     name             TEXT UNIQUE NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS agencies
     CHECK (TRIM(last_update_date) != '')
 ) strict;
 
-CREATE TABLE IF NOT EXISTS positions
+CREATE TABLE positions
 (
     id               INTEGER PRIMARY KEY AUTOINCREMENT,
     title            TEXT UNIQUE NOT NULL,
@@ -21,14 +21,14 @@ CREATE TABLE IF NOT EXISTS positions
 
 ) strict;
 
-CREATE TABLE IF NOT EXISTS employees
+CREATE TABLE employees
 (
     id               INTEGER PRIMARY KEY AUTOINCREMENT,
-    name             TEXT UNIQUE NOT NULL,
-    position_id      INTEGER     NOT NULL,
-    agency_id        INTEGER     NOT NULL,
-    creation_date    TEXT        NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    last_update_date TEXT        NOT NULL,
+    name             TEXT    NOT NULL,
+    position_id      INTEGER NOT NULL,
+    agency_id        INTEGER NOT NULL,
+    creation_date    TEXT    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_update_date TEXT    NOT NULL,
     CHECK (TRIM(name) != ''),
     CHECK (TRIM(creation_date) != ''),
     CHECK (TRIM(last_update_date) != ''),
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS employees
 ) strict;
 
 
-CREATE TABLE IF NOT EXISTS salaries
+CREATE TABLE salaries
 (
     id               INTEGER PRIMARY KEY AUTOINCREMENT,
     year             INTEGER NOT NULL,
