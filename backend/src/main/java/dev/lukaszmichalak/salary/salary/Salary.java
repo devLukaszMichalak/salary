@@ -65,23 +65,17 @@ class Salary {
   @Override
   public String toString() {
     return getClass().getSimpleName()
-        + "("
-        + "id = "
+        + "(id = "
         + id
-        + ", "
-        + "year = "
+        + ", year = "
         + year
-        + ", "
-        + "yearlyGrossPay = "
+        + ", yearlyGrossPay = "
         + yearlyGrossPay
-        + ", "
-        + "employeeId = "
+        + ", employeeId = "
         + employeeId
-        + ", "
-        + "creationDate = "
+        + ", creationDate = "
         + creationDate
-        + ", "
-        + "lastUpdatedOn = "
+        + ", lastUpdatedOn = "
         + lastUpdatedOn
         + ")";
   }
