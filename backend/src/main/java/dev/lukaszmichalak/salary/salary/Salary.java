@@ -5,16 +5,18 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
 
-@Entity
 @Getter(AccessLevel.PACKAGE)
+@Entity
 @Table(
     name = "salaries",
     uniqueConstraints = {@UniqueConstraint(columnNames = {"year", "employee_id"})})
+@NoArgsConstructor
 class Salary {
 
   @Id

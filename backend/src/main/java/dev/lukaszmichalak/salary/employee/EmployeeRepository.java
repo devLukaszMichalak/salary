@@ -22,4 +22,7 @@ interface EmployeeRepository extends ListCrudRepository<Employee, Long> {
   @Override
   @EntityGraph(value = "Employee.full")
   List<Employee> findAllById(@NonNull Iterable<Long> ids);
+  
+  @EntityGraph(value = "Employee.full")
+  List<Employee> findAllByAgencyName(@NonNull String agencyName);
 }

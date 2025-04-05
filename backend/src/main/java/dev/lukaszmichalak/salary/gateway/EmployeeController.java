@@ -1,6 +1,6 @@
 package dev.lukaszmichalak.salary.gateway;
 
-import dev.lukaszmichalak.salary.employee.EmployeeService;
+import dev.lukaszmichalak.salary.employee.EmployeeFacade;
 import dev.lukaszmichalak.salary.employee.dto.EmployeeDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -10,19 +10,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/employees")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 class EmployeeController {
 
-  private final EmployeeService employeeService;
+  private final EmployeeFacade employeeFacade;
 
-  @GetMapping
+  @GetMapping("/employees")
   List<EmployeeDto> getEmployees() {
-    return employeeService.getEmployees();
+    return employeeFacade.getEmployees();
   }
 
-  @GetMapping("/{id}")
-  EmployeeDto getEmployee(@PathVariable("id") Long id) {
-    return employeeService.getEmployee(id);
+  @GetMapping("/employees/{employeeId}")
+  EmployeeDto getEmployee(@PathVariable("employeeId") Long employeeId) {
+    return employeeFacade.getEmployee(employeeId);
+  }
+
+  @GetMapping("/agencies")
+  List<String> getAgencyNames() {
+    return employeeFacade.getAgencyNames();
+  }
+
+  @GetMapping("/agencies/{agencyName}/employees")
+  List<EmployeeDto> getEmployeesOfAgency(@PathVariable("agencyName") String agencyName) {
+    return employeeFacade.getEmployeesOfAgency(agencyName);
   }
 }

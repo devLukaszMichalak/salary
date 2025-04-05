@@ -25,6 +25,7 @@ module.exports = tseslint.config(
     },
     processor: angular.processInlineTemplates,
     rules: {
+      '@typescript-eslint/no-extraneous-class': 'warn',
       '@angular-eslint/directive-selector': [
         'error',
         {
