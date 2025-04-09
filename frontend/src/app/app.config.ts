@@ -1,15 +1,28 @@
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideDialogConfig } from '@ngneat/dialog';
+import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { routes } from './app.routes';
+import { errorInterceptor } from './error/error.interceptor';
+import { processingInterceptor } from './processing/processing.interceptor';
 import { provideTheme } from './theme/theme.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHotToastConfig({
+      dismissible: false,
+      style: {
+        backgroundColor: 'var(--color-base-200)',
+        color: 'var(--color-base-content)'
+      },
+      position: 'bottom-center'
+    }),
+    provideHttpClient(
+      withInterceptors([errorInterceptor, processingInterceptor])
+    ),
     provideTheme('light'),
     provideDialogConfig({ enableClose: false, closeButton: true })
   ]
