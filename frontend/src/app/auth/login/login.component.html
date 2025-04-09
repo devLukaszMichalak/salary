@@ -37,7 +37,10 @@
     </form>
 
     <div class="card-actions justify-end">
-      <button class="btn btn-primary" [disabled]="loginForm.invalid">
+      <button
+        class="btn btn-primary"
+        [disabled]="loginForm.invalid"
+        (click)="login()">
         Sign in
       </button>
     </div>
