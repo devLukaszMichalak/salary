@@ -64,19 +64,7 @@ class Position {
 
   @Override
   public String toString() {
-    return getClass().getSimpleName()
-        + "("
-        + "id = "
-        + id
-        + ", "
-        + "title = "
-        + title
-        + ", "
-        + "creationDate = "
-        + creationDate
-        + ", "
-        + "lastUpdatedOn = "
-        + lastUpdatedOn
-        + ")";
+    return "%s(id = %d, title = %s, creationDate = %s, lastUpdatedOn = %s)"
+        .formatted(getClass().getSimpleName(), id, title, creationDate, lastUpdatedOn);
   }
 }

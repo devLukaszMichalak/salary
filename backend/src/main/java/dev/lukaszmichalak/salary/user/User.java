@@ -1,36 +1,42 @@
-package dev.lukaszmichalak.salary.salary;
+package dev.lukaszmichalak.salary.user;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@Getter(AccessLevel.PACKAGE)
 @Entity
-@Table(
-    name = "salaries",
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"year", "employee_id"})})
+@Table(name = "users")
 @NoArgsConstructor
-class Salary {
+@AllArgsConstructor
+class User implements UserDetails {
+
+  User(String email, String password) {
+    this.email = email;
+    this.password = password;
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Getter(AccessLevel.PACKAGE)
   private Long id;
 
-  @Column(name = "year", nullable = false)
-  private int year;
+  @Getter
+  @Column(name = "email", nullable = false, unique = true)
+  private String email;
 
-  @Column(name = "yearly_gross_pay", nullable = false)
-  private double yearlyGrossPay;
-
-  @Column(name = "employee_id", nullable = false)
-  private long employeeId;
+  @Getter
+  @Setter(AccessLevel.PACKAGE)
+  @Column(name = "password", nullable = false)
+  private String password;
 
   @CreationTimestamp(source = SourceType.DB)
   @Column(name = "creation_date", nullable = false, updatable = false)
@@ -39,6 +45,16 @@ class Salary {
   @UpdateTimestamp(source = SourceType.DB)
   @Column(name = "last_update_date", nullable = false)
   private LocalDateTime lastUpdatedOn;
+
+  @Override
+  public String getUsername() {
+    return getEmail();
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of();
+  }
 
   @Override
   public final boolean equals(Object o) {
@@ -53,8 +69,8 @@ class Salary {
             ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass()
             : this.getClass();
     if (thisEffectiveClass != oEffectiveClass) return false;
-    Salary salary = (Salary) o;
-    return getId() != null && Objects.equals(getId(), salary.getId());
+    User user = (User) o;
+    return getId() != null && Objects.equals(getId(), user.getId());
   }
 
   @Override
@@ -66,14 +82,7 @@ class Salary {
 
   @Override
   public String toString() {
-    return "%s(id = %d, year = %d, yearlyGrossPay = %s, employeeId = %d, creationDate = %s, lastUpdatedOn = %s)"
-        .formatted(
-            getClass().getSimpleName(),
-            id,
-            year,
-            yearlyGrossPay,
-            employeeId,
-            creationDate,
-            lastUpdatedOn);
+    return "%s(id = %d, email = %s, password = %s, creationDate = %s, lastUpdatedOn = %s)"
+        .formatted(getClass().getSimpleName(), id, email, password, creationDate, lastUpdatedOn);
   }
 }

@@ -86,19 +86,7 @@ class Employee {
 
   @Override
   public String toString() {
-    return getClass().getSimpleName()
-        + "("
-        + "id = "
-        + id
-        + ", "
-        + "name = "
-        + name
-        + ", "
-        + "creationDate = "
-        + creationDate
-        + ", "
-        + "lastUpdatedOn = "
-        + lastUpdatedOn
-        + ")";
+    return "%s(id = %d, name = %s, creationDate = %s, lastUpdatedOn = %s)"
+        .formatted(getClass().getSimpleName(), id, name, creationDate, lastUpdatedOn);
   }
 }

@@ -1,6 +1,6 @@
 CREATE TABLE agencies
 (
-    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    id               INTEGER     NOT NULL PRIMARY KEY AUTOINCREMENT,
     name             TEXT UNIQUE NOT NULL,
     creation_date    TEXT        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_update_date TEXT        NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE agencies
 
 CREATE TABLE positions
 (
-    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    id               INTEGER     NOT NULL PRIMARY KEY AUTOINCREMENT,
     title            TEXT UNIQUE NOT NULL,
     creation_date    TEXT        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_update_date TEXT        NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE positions
 
 CREATE TABLE employees
 (
-    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    id               INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     name             TEXT    NOT NULL,
     position_id      INTEGER NOT NULL,
     agency_id        INTEGER NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE employees
 
 CREATE TABLE salaries
 (
-    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    id               INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     year             INTEGER NOT NULL,
     yearly_gross_pay REAL    NOT NULL,
     employee_id      INTEGER NOT NULL,
