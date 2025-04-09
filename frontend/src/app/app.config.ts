@@ -16,7 +16,8 @@ export const appConfig: ApplicationConfig = {
       dismissible: false,
       style: {
         backgroundColor: 'var(--color-base-200)',
-        color: 'var(--color-base-content)'
+        color: 'var(--color-base-content)',
+        borderRadius: 'var(--radius-field)'
       },
       position: 'bottom-center'
     }),
