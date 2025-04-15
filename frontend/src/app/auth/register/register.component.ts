@@ -1,18 +1,27 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core';
+import { heroAtSymbol, heroKey } from '@ng-icons/heroicons/outline';
 import type { RegisterForm } from './register-form-type';
 import { RegisterValidators } from './register-validators';
 
 @Component({
   selector: 'app-register',
-  imports: [],
+  imports: [ReactiveFormsModule, NgIcon],
+  providers: [
+    provideIcons({ heroKey, heroAtSymbol }),
+    provideNgIconsConfig({
+      color: 'var(--color-primary)',
+      size: '1.2em'
+    })
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
   #fb = inject(FormBuilder).nonNullable;
 
-  registerForm: FormGroup<RegisterForm> = this.#fb.group(
+  registerForm: RegisterForm = this.#fb.group(
     {
       email: ['', [Validators.required, Validators.email]],
       password: [
@@ -33,4 +42,6 @@ export class RegisterComponent {
       ]
     }
   );
+
+  register() {}
 }
