@@ -12,7 +12,7 @@ spring:
     baseline-on-migrate: false
 
   jpa:
-    show-sql: true
+    show-sql: false
     open-in-view: true
     database-platform: org.hibernate.community.dialect.SQLiteDialect
     hibernate:

@@ -25,6 +25,6 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([errorInterceptor, processingInterceptor])
     ),
     provideTheme('light'),
-    provideDialogConfig({ enableClose: false, closeButton: true })
+    provideDialogConfig({ enableClose: false })
   ]
 };
