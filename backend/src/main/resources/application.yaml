@@ -17,3 +17,9 @@ spring:
     database-platform: org.hibernate.community.dialect.SQLiteDialect
     hibernate:
       ddl-auto: none
+
+  cache:
+    type: caffeine
+    cache-names: emailExists
+    caffeine:
+      spec: initialCapacity=200,maximumSize=1000,expireAfterWrite=1d

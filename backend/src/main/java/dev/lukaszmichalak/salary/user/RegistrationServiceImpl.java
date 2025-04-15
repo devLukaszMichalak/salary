@@ -1,7 +1,8 @@
 package dev.lukaszmichalak.salary.user;
 
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,11 +19,13 @@ class RegistrationServiceImpl implements RegistrationService {
   private final PasswordEncoder passwordEncoder;
 
   @Override
+  @Cacheable("emailExists")
   public boolean doesUserExists(String email) {
     return userDetailsManager.userExists(email);
   }
 
   @Override
+  @CacheEvict(value = "emailExists", key = "#email")
   public void register(String email, String password) {
 
     userDetailsManager.createUser(new User(email, passwordEncoder.encode(password)));
