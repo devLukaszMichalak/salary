@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { CapitalizePipe } from '../text-transform/capitalize.pipe';
 import { ThemeService } from '../theme/theme.service';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',

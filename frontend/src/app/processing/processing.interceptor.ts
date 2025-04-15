@@ -21,7 +21,7 @@ export const processingInterceptor: HttpInterceptorFn = (
     iconTheme: {
       primary: 'var(--color-primary)',
       secondary: 'var(--color-primary-content)'
-    },
+    }
   });
 
   return next(request).pipe(
@@ -32,7 +32,7 @@ export const processingInterceptor: HttpInterceptorFn = (
           iconTheme: {
             primary: 'var(--color-error)',
             secondary: 'var(--color-error-content)'
-          },
+          }
         });
       },
       complete: () => {
@@ -41,7 +41,7 @@ export const processingInterceptor: HttpInterceptorFn = (
           iconTheme: {
             primary: 'var(--color-success)',
             secondary: 'var(--color-success-content)'
-          },
+          }
         });
       }
     })

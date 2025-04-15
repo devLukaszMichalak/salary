@@ -9,8 +9,7 @@ describe('ErrorDialogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ErrorDialogComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorDialogComponent);
     component = fixture.componentInstance;
