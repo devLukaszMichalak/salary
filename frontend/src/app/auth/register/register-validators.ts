@@ -1,8 +1,11 @@
 import {
   AbstractControl,
+  type AsyncValidatorFn,
   type ValidationErrors,
   type ValidatorFn
 } from '@angular/forms';
+import { map, type Observable, of, switchMap, timer } from 'rxjs';
+import type { AuthService } from '../auth.service';
 
 export class RegisterValidators {
   static hasUpperCaseLetterValidator: ValidatorFn = (
@@ -30,4 +33,22 @@ export class RegisterValidators {
       const repeatPassword = group.get(repeatPasswordControlName)?.value;
       return password === repeatPassword ? null : { passwordMismatch: true };
     };
+
+  static emailTakenValidator(authService: AuthService): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      if (!control.value || control.invalid) {
+        return of(null);
+      }
+
+      return timer(300).pipe(
+        switchMap(() =>
+          authService.checkEmail(control.value).pipe(
+            map((isTaken: boolean) => {
+              return isTaken ? { emailTaken: true } : null;
+            })
+          )
+        )
+      );
+    };
+  }
 }

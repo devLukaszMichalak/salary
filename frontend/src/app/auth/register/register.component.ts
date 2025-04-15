@@ -1,15 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core';
-import { heroAtSymbol, heroKey } from '@ng-icons/heroicons/outline';
+import {
+  NgIcon,
+  NgIconStack,
+  provideIcons,
+  provideNgIconsConfig
+} from '@ng-icons/core';
+import {
+  heroArrowUturnRight,
+  heroAtSymbol,
+  heroKey
+} from '@ng-icons/heroicons/outline';
+import { AuthService } from '../auth.service';
 import type { RegisterForm } from './register-form-type';
 import { RegisterValidators } from './register-validators';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, NgIcon],
+  imports: [ReactiveFormsModule, NgIcon, NgIconStack],
   providers: [
-    provideIcons({ heroKey, heroAtSymbol }),
+    provideIcons({ heroKey, heroAtSymbol, heroArrowUturnRight }),
     provideNgIconsConfig({
       color: 'var(--color-primary)',
       size: '1.2em'
@@ -20,10 +30,15 @@ import { RegisterValidators } from './register-validators';
 })
 export class RegisterComponent {
   #fb = inject(FormBuilder).nonNullable;
+  #authService = inject(AuthService);
 
   registerForm: RegisterForm = this.#fb.group(
     {
-      email: ['', [Validators.required, Validators.email]],
+      email: [
+        '',
+        [Validators.required, Validators.email],
+        [RegisterValidators.emailTakenValidator(this.#authService)]
+      ],
       password: [
         '',
         [

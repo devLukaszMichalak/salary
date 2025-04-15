@@ -11,8 +11,7 @@ interface UserRepository extends ListCrudRepository<User, Long> {
 
   Optional<User> findUserByEmail(String email);
 
-  @Query(value = "SELECT EXISTS(SELECT email FROM users WHERE email = :email)", nativeQuery = true)
-  boolean existsByEmail(@Param("email") String email);
+  boolean existsByEmail(String email);
 
   void deleteUserByEmail(String email);
 

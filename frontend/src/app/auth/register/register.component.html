@@ -11,12 +11,18 @@
             [formControl]="registerForm.controls.email"
             type="email"
             placeholder="mail@site.com" />
+          @if (registerForm.controls.email.pending) {
+            <span class="loading loading-spinner loading-xs"></span>
+          }
         </label>
         @if (registerForm.controls.email.hasError('email')) {
           <p class="validator-hint text-error">Enter valid email address.</p>
         }
         @if (registerForm.controls.email.hasError('required')) {
           <p class="validator-hint text-error">Email is required.</p>
+        }
+        @if (registerForm.controls.email.hasError('emailTaken')) {
+          <p class="validator-hint text-error">Email is taken.</p>
         }
       </div>
 
@@ -59,7 +65,13 @@
         <label
           class="input"
           [class.input-error]="registerForm.controls.repeatPassword.invalid">
-          <ng-icon class="pr-1" name="heroKey" />
+          <ng-icon-stack class="pr-1" size="1.2em">
+            <ng-icon size="0.9em" name="heroKey"></ng-icon>
+            <ng-icon
+              class="pr-4.5 pb-6"
+              size="0.7em"
+              name="heroArrowUturnRight" />
+          </ng-icon-stack>
           <input
             [formControl]="registerForm.controls.repeatPassword"
             type="password"
@@ -81,7 +93,7 @@
     <div class="card-actions justify-end">
       <button
         class="btn btn-primary"
-        [disabled]="registerForm.invalid"
+        [disabled]="!registerForm.valid"
         (click)="register()">
         Sign up
       </button>
