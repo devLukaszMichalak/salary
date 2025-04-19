@@ -7,6 +7,7 @@ import { routes } from './app.routes';
 import { errorInterceptor } from './error/error.interceptor';
 import { processingInterceptor } from './processing/processing.interceptor';
 import { provideTheme } from './theme/theme.provider';
+import { authInterceptor } from './auth/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,7 +23,7 @@ export const appConfig: ApplicationConfig = {
       position: 'bottom-center'
     }),
     provideHttpClient(
-      withInterceptors([errorInterceptor, processingInterceptor])
+      withInterceptors([errorInterceptor, processingInterceptor, authInterceptor])
     ),
     provideTheme('light'),
     provideDialogConfig({ enableClose: false })

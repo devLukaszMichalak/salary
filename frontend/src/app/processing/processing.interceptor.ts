@@ -6,14 +6,17 @@ import {
 import { inject } from '@angular/core';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { Observable, tap } from 'rxjs';
+import { TOAST_BYPASS } from './toast-bypass';
 
 export const processingInterceptor: HttpInterceptorFn = (
   request,
   next
 ): Observable<HttpEvent<unknown>> => {
   const toastService = inject(HotToastService);
-
-  if (!shouldIntercept(request)) {
+  
+  const skipToast = request.context.get(TOAST_BYPASS);
+  
+  if (!shouldIntercept(request) || skipToast) {
     return next(request);
   }
 

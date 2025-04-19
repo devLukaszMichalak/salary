@@ -23,3 +23,6 @@ spring:
     cache-names: emailExists
     caffeine:
       spec: initialCapacity=200,maximumSize=1000,expireAfterWrite=1d
+
+jwt:
+  secret-key: totally_secret_key_that_should_definitely_be_declared_here

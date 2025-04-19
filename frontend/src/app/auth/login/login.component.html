@@ -1,48 +1,55 @@
-<div class="card bg-base-100 card-md w-96 shadow-sm">
-  <div class="card-body">
-    <h2 class="card-title mb-4 text-2xl">Sign in</h2>
-    <form class="flex flex-col gap-4" [formGroup]="loginForm">
-      <div>
-        <label
-          class="input"
-          [class.input-error]="loginForm.controls.email.invalid">
-          <ng-icon class="pr-1" name="heroAtSymbol" />
-          <input
-            [formControl]="loginForm.controls.email"
-            type="email"
-            placeholder="mail@site.com" />
-        </label>
-        @if (loginForm.controls.email.hasError('email')) {
-          <p class="validator-hint text-error">Enter valid email address.</p>
-        }
-        @if (loginForm.controls.email.hasError('required')) {
-          <p class="validator-hint text-error">Email is required.</p>
-        }
+<div class="flex justify-center items-center h-screen">
+  <div class="card bg-base-100 card-md w-96 shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-4 text-2xl">Login</h2>
+      <form class="flex flex-col gap-4" [formGroup]="loginForm">
+        <div>
+          <label
+            class="input"
+            [class.input-error]="loginForm.controls.email.invalid">
+            <ng-icon class="pr-1" name="heroAtSymbol" />
+            <input
+              [formControl]="loginForm.controls.email"
+              type="email"
+              placeholder="mail@site.com" />
+          </label>
+          @if (loginForm.controls.email.hasError('email')) {
+            <p class="validator-hint text-error">Enter valid email address.</p>
+          }
+          @if (loginForm.controls.email.hasError('required')) {
+            <p class="validator-hint text-error">Email is required.</p>
+          }
+        </div>
+
+        <div>
+          <label
+            class="input"
+            [class.input-error]="loginForm.controls.password.invalid">
+            <ng-icon class="pr-1" name="heroKey" />
+            <input
+              [formControl]="loginForm.controls.password"
+              type="password"
+              placeholder="Password" />
+          </label>
+          @if (loginForm.controls.password.hasError('required')) {
+            <p class="validator-hint text-error">Password is required.</p>
+          }
+        </div>
+
+      </form>
+
+      <div class="card-actions justify-end">
+        <button
+          class="btn btn-primary"
+          [disabled]="loginForm.invalid || (loading$ | async)"
+          (click)="login()">
+          Sign in
+        </button>
       </div>
 
-      <div>
-        <label
-          class="input"
-          [class.input-error]="loginForm.controls.password.invalid">
-          <ng-icon class="pr-1" name="heroKey" />
-          <input
-            [formControl]="loginForm.controls.password"
-            type="password"
-            placeholder="Password" />
-        </label>
-        @if (loginForm.controls.password.hasError('required')) {
-          <p class="validator-hint text-error">Password is required.</p>
-        }
-      </div>
-    </form>
-
-    <div class="card-actions justify-end">
-      <button
-        class="btn btn-primary"
-        [disabled]="loginForm.invalid"
-        (click)="login()">
-        Sign in
-      </button>
+      <a class="link text-center mt-4" [routerLink]="'/register'">
+        Don't have an account? Register now
+      </a>
     </div>
   </div>
 </div>

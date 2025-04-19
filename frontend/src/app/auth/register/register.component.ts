@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   NgIcon,
@@ -14,10 +14,11 @@ import {
 import { AuthService } from '../auth.service';
 import type { RegisterForm } from './register-form-type';
 import { RegisterValidators } from './register-validators';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, NgIcon, NgIconStack],
+  imports: [ReactiveFormsModule, NgIcon, NgIconStack, RouterLink],
   providers: [
     provideIcons({ heroKey, heroAtSymbol, heroArrowUturnRight }),
     provideNgIconsConfig({
@@ -31,6 +32,9 @@ import { RegisterValidators } from './register-validators';
 export class RegisterComponent {
   #fb = inject(FormBuilder).nonNullable;
   #authService = inject(AuthService);
+  #router = inject(Router);
+
+  isLoading = signal<boolean>(false);
 
   registerForm: RegisterForm = this.#fb.group(
     {
@@ -58,5 +62,11 @@ export class RegisterComponent {
     }
   );
 
-  register() {}
+  register() {
+    this.isLoading.set(true);
+    this.#authService
+      .register(this.registerForm.getRawValue())
+      .subscribe(() => this.#router.navigate(['dashboard']))
+      .add(() => this.isLoading.set(false));
+  }
 }

@@ -1,102 +1,108 @@
-<div class="card bg-base-100 card-md w-96 shadow-sm">
-  <div class="card-body">
-    <h2 class="card-title mb-4 text-2xl">Sign up</h2>
-    <form class="flex flex-col gap-4" [formGroup]="registerForm">
-      <div>
-        <label
-          class="input"
-          [class.input-error]="registerForm.controls.email.invalid">
-          <ng-icon class="pr-1" name="heroAtSymbol" />
-          <input
-            [formControl]="registerForm.controls.email"
-            type="email"
-            placeholder="mail@site.com" />
-          @if (registerForm.controls.email.pending) {
-            <span class="loading loading-spinner loading-xs"></span>
+<div class="flex justify-center items-center h-screen">
+  <div class="card bg-base-100 card-md w-96 shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-4 text-2xl">Register</h2>
+      <form class="flex flex-col gap-4" [formGroup]="registerForm">
+        <div>
+          <label
+            class="input"
+            [class.input-error]="registerForm.controls.email.invalid">
+            <ng-icon class="pr-1" name="heroAtSymbol" />
+            <input
+              [formControl]="registerForm.controls.email"
+              type="email"
+              placeholder="mail@site.com" />
+            @if (registerForm.controls.email.pending) {
+              <span class="loading loading-spinner loading-xs"></span>
+            }
+          </label>
+          @if (registerForm.controls.email.hasError('email')) {
+            <p class="validator-hint text-error">Enter valid email address.</p>
           }
-        </label>
-        @if (registerForm.controls.email.hasError('email')) {
-          <p class="validator-hint text-error">Enter valid email address.</p>
-        }
-        @if (registerForm.controls.email.hasError('required')) {
-          <p class="validator-hint text-error">Email is required.</p>
-        }
-        @if (registerForm.controls.email.hasError('emailTaken')) {
-          <p class="validator-hint text-error">Email is taken.</p>
-        }
+          @if (registerForm.controls.email.hasError('required')) {
+            <p class="validator-hint text-error">Email is required.</p>
+          }
+          @if (registerForm.controls.email.hasError('emailTaken')) {
+            <p class="validator-hint text-error">Email is taken.</p>
+          }
+        </div>
+
+        <div>
+          <label
+            class="input"
+            [class.input-error]="registerForm.controls.password.invalid">
+            <ng-icon class="pr-1" name="heroKey" />
+            <input
+              [formControl]="registerForm.controls.password"
+              type="password"
+              placeholder="Password" />
+          </label>
+          @if (registerForm.controls.password.hasError('required')) {
+            <p class="validator-hint text-error">Password is required.</p>
+          }
+          @if (registerForm.controls.password.hasError('minlength')) {
+            <p class="validator-hint text-error">
+              Minimal length is 8 characters.
+            </p>
+          }
+          @if (registerForm.controls.password.hasError('missingUpperCase')) {
+            <p class="validator-hint text-error">
+              At least one uppercase letter is required.
+            </p>
+          }
+          @if (registerForm.controls.password.hasError('missingLowerCase')) {
+            <p class="validator-hint text-error">
+              At least one lowercase letter is required.
+            </p>
+          }
+          @if (registerForm.controls.password.hasError('missingNumber')) {
+            <p class="validator-hint text-error">
+              At least one number is required.
+            </p>
+          }
+        </div>
+
+        <div>
+          <label
+            class="input"
+            [class.input-error]="registerForm.controls.repeatPassword.invalid">
+            <ng-icon-stack class="pr-1" size="1.2em">
+              <ng-icon size="0.9em" name="heroKey"></ng-icon>
+              <ng-icon
+                class="pr-4.5 pb-6"
+                size="0.7em"
+                name="heroArrowUturnRight" />
+            </ng-icon-stack>
+            <input
+              [formControl]="registerForm.controls.repeatPassword"
+              type="password"
+              placeholder="Repeat password" />
+          </label>
+          @if (registerForm.controls.repeatPassword.hasError('required')) {
+            <p class="validator-hint text-error">
+              Repetition of password is required.
+            </p>
+          }
+          @if (registerForm.hasError('passwordMismatch')) {
+            <p class="validator-hint text-error">
+              Password and repeat password differ.
+            </p>
+          }
+        </div>
+      </form>
+
+      <div class="card-actions justify-end">
+        <button
+          class="btn btn-primary"
+          [disabled]="!registerForm.valid || isLoading()"
+          (click)="register()">
+          Sign up
+        </button>
       </div>
 
-      <div>
-        <label
-          class="input"
-          [class.input-error]="registerForm.controls.password.invalid">
-          <ng-icon class="pr-1" name="heroKey" />
-          <input
-            [formControl]="registerForm.controls.password"
-            type="password"
-            placeholder="Password" />
-        </label>
-        @if (registerForm.controls.password.hasError('required')) {
-          <p class="validator-hint text-error">Password is required.</p>
-        }
-        @if (registerForm.controls.password.hasError('minlength')) {
-          <p class="validator-hint text-error">
-            Minimal length is 8 characters.
-          </p>
-        }
-        @if (registerForm.controls.password.hasError('missingUpperCase')) {
-          <p class="validator-hint text-error">
-            At least one uppercase letter is required.
-          </p>
-        }
-        @if (registerForm.controls.password.hasError('missingLowerCase')) {
-          <p class="validator-hint text-error">
-            At least one lowercase letter is required.
-          </p>
-        }
-        @if (registerForm.controls.password.hasError('missingNumber')) {
-          <p class="validator-hint text-error">
-            At least one number is required.
-          </p>
-        }
-      </div>
-
-      <div>
-        <label
-          class="input"
-          [class.input-error]="registerForm.controls.repeatPassword.invalid">
-          <ng-icon-stack class="pr-1" size="1.2em">
-            <ng-icon size="0.9em" name="heroKey"></ng-icon>
-            <ng-icon
-              class="pr-4.5 pb-6"
-              size="0.7em"
-              name="heroArrowUturnRight" />
-          </ng-icon-stack>
-          <input
-            [formControl]="registerForm.controls.repeatPassword"
-            type="password"
-            placeholder="Repeat password" />
-        </label>
-        @if (registerForm.controls.repeatPassword.hasError('required')) {
-          <p class="validator-hint text-error">
-            Repetition of password is required.
-          </p>
-        }
-        @if (registerForm.hasError('passwordMismatch')) {
-          <p class="validator-hint text-error">
-            Password and repeat password differ.
-          </p>
-        }
-      </div>
-    </form>
-
-    <div class="card-actions justify-end">
-      <button
-        class="btn btn-primary"
-        [disabled]="!registerForm.valid"
-        (click)="register()">
-        Sign up
-      </button>
+      <a class="link text-center mt-4" [routerLink]="'/login'">
+        Do have have an account? Log in
+      </a>
     </div>
   </div>
 </div>

@@ -1,22 +1,92 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
-import type { Observable } from 'rxjs';
+import { HttpClient, HttpContext } from '@angular/common/http';
+import {
+  computed,
+  effect,
+  inject,
+  Injectable,
+  type Signal,
+  signal
+} from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { map, type Observable, of, switchMap, tap } from 'rxjs';
+import { TOAST_BYPASS } from '../processing/toast-bypass';
+import type { JwtResponse } from './jwt-response';
+import type { LoginUserCommand } from './login-user-command';
+import type { RegisterUserCommand } from './register-user-command';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  #isLoggedIn = signal(true);
+  #token = signal(localStorage.getItem('token') ?? '');
 
   #httpClient = inject(HttpClient);
 
-  get isLoggedIn(): boolean {
-    return this.#isLoggedIn();
+  constructor() {
+    effect(() => {
+      localStorage.setItem('token', this.#token());
+    });
+  }
+
+  get token(): Signal<string> {
+    return this.#token.asReadonly();
+  }
+
+  resetToken() {
+    this.#token.set('');
+  }
+
+  get doesTokenExist(): Signal<boolean> {
+    return computed(() => !!this.#token());
+  }
+
+  get isTokenValid$(): Observable<boolean> {
+    return toObservable(this.doesTokenExist).pipe(
+      switchMap(doesTokenExist => {
+        if (!doesTokenExist) {
+          return of(false);
+        }
+
+        return this.validateToken();
+      })
+    );
   }
 
   checkEmail(email: string): Observable<boolean> {
     return this.#httpClient.get<boolean>('api/v1/auth/check-email', {
       params: { email }
     });
+  }
+
+  login(loginCredentials: LoginUserCommand): Observable<boolean> {
+    return this.#httpClient
+      .post<JwtResponse>('api/v1/auth/login', loginCredentials)
+      .pipe(
+        tap(jwt => this.#token.set(jwt.token)),
+        map(jwt => !!jwt.token)
+      );
+  }
+
+  register(registerCredentials: RegisterUserCommand): Observable<boolean> {
+    return this.#httpClient
+      .post<JwtResponse>('api/v1/auth/register', registerCredentials)
+      .pipe(
+        tap(jwt => this.#token.set(jwt.token)),
+        map(jwt => !!jwt.token)
+      );
+  }
+
+  logOut(): Observable<void> {
+    return this.#httpClient
+      .post<void>('api/v1/auth/logout', {})
+      .pipe(tap(() => this.#token.set('')));
+  }
+
+  validateToken(): Observable<boolean> {
+    return this.#httpClient.post<boolean>(
+      '/api/v1/auth/validate-token',
+      {},
+      { context: new HttpContext().set(TOAST_BYPASS, true) }
+    );
   }
 }
