@@ -13,9 +13,9 @@ export const processingInterceptor: HttpInterceptorFn = (
   next
 ): Observable<HttpEvent<unknown>> => {
   const toastService = inject(HotToastService);
-  
+
   const skipToast = request.context.get(TOAST_BYPASS);
-  
+
   if (!shouldIntercept(request) || skipToast) {
     return next(request);
   }

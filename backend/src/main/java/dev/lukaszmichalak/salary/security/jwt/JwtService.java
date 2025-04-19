@@ -37,7 +37,7 @@ public class JwtService {
   }
 
   public boolean isTokenValid(String token) {
-    try{
+    try {
       return jwtClaimsExtractor.extractExpiration(token).after(Date.from(Instant.now(clock)));
     } catch (ExpiredJwtException e) {
       return false;

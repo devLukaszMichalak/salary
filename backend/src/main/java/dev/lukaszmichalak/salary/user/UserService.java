@@ -7,12 +7,12 @@ import dev.lukaszmichalak.salary.user.dto.UserDto;
 public interface UserService {
 
   boolean doesUserExists(String email);
-  
+
   UserDto register(RegisterUserCommand cmd);
-  
+
   UserDto login(LoginUserCommand cmd);
-  
+
   UserDto getUser(String email);
-  
+
   void logout();
 }

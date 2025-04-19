@@ -1,4 +1,4 @@
-<div class="flex justify-center items-center h-screen">
+<div class="flex h-screen items-center justify-center">
   <div class="card bg-base-100 card-md w-96 shadow-sm">
     <div class="card-body">
       <h2 class="card-title mb-4 text-2xl">Login</h2>
@@ -35,7 +35,6 @@
             <p class="validator-hint text-error">Password is required.</p>
           }
         </div>
-
       </form>
 
       <div class="card-actions justify-end">
@@ -47,7 +46,7 @@
         </button>
       </div>
 
-      <a class="link text-center mt-4" [routerLink]="'/register'">
+      <a class="link mt-4 text-center" [routerLink]="'/register'">
         Don't have an account? Register now
       </a>
     </div>

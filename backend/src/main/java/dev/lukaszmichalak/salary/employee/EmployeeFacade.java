@@ -7,8 +7,8 @@ public interface EmployeeFacade {
   List<EmployeeDto> getEmployees();
 
   EmployeeDto getEmployee(Long employeeId);
-  
+
   List<String> getAgencyNames();
-  
+
   List<EmployeeDto> getEmployeesOfAgency(String agencyName);
 }

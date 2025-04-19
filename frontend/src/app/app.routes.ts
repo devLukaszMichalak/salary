@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
+import { alreadyLoggedInGuard } from './auth/already-logged-in.guard';
+import { canActivateProtectedGuard } from './auth/can-activate-protected.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { canActivateProtectedGuard } from './auth/can-activate-protected.guard';
-import { alreadyLoggedInGuard } from './auth/already-logged-in.guard';
 
 export const routes: Routes = [
   {

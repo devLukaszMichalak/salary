@@ -4,10 +4,10 @@ import { provideRouter } from '@angular/router';
 import { provideDialogConfig } from '@ngneat/dialog';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { routes } from './app.routes';
+import { authInterceptor } from './auth/auth.interceptor';
 import { errorInterceptor } from './error/error.interceptor';
 import { processingInterceptor } from './processing/processing.interceptor';
 import { provideTheme } from './theme/theme.provider';
-import { authInterceptor } from './auth/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,7 +23,11 @@ export const appConfig: ApplicationConfig = {
       position: 'bottom-center'
     }),
     provideHttpClient(
-      withInterceptors([errorInterceptor, processingInterceptor, authInterceptor])
+      withInterceptors([
+        errorInterceptor,
+        processingInterceptor,
+        authInterceptor
+      ])
     ),
     provideTheme('light'),
     provideDialogConfig({ enableClose: false })

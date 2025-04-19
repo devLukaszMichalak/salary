@@ -3,7 +3,6 @@ package dev.lukaszmichalak.salary.employee;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
