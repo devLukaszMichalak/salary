@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +50,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
           if (jwtService.isTokenValid(token, email)) {
             UsernamePasswordAuthenticationToken authToken =
-                UsernamePasswordAuthenticationToken.unauthenticated(email, null);
+                UsernamePasswordAuthenticationToken.authenticated(email, null, List.of());
 
             authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authToken);

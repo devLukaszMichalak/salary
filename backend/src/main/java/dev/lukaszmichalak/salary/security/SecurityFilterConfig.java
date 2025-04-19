@@ -31,7 +31,8 @@ class SecurityFilterConfig {
 
               CorsConfiguration config = new CorsConfiguration();
               config.setAllowCredentials(true);
-              config.addAllowedOrigin("*");
+              config.addAllowedOrigin("http://localhost:4200");
+              config.addAllowedOrigin("http://localhost:8080");
               config.addAllowedHeader("*");
               config.addAllowedMethod("*");
               source.registerCorsConfiguration("/**", config);
@@ -45,14 +46,12 @@ class SecurityFilterConfig {
         .authorizeHttpRequests(
             authorize ->
                 authorize
-                    .requestMatchers(
-                        HttpMethod.POST,
-                        "/api/v1/auth/validate-token",
-                        "/api/v1/auth/register",
-                        "/api/v1/auth/login")
+                    .requestMatchers(HttpMethod.POST, "/api/v1/auth/validate-token")
                     .permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/v1/auth/register", "/api/v1/auth/login")
+                    .anonymous()
                     .requestMatchers(HttpMethod.GET, "/api/v1/auth/check-email")
-                    .permitAll()
+                    .anonymous()
                     .anyRequest()
                     .authenticated())
         .build();
