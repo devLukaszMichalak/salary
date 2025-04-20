@@ -50,7 +50,7 @@ class SecurityFilterConfig {
                     .permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/v1/auth/register", "/api/v1/auth/login")
                     .anonymous()
-                    .requestMatchers(HttpMethod.GET, "/api/v1/auth/check-email")
+                    .requestMatchers(HttpMethod.GET, "/api/v1/auth/is-email-taken")
                     .anonymous()
                     .anyRequest()
                     .authenticated())

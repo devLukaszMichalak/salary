@@ -52,8 +52,8 @@ export class AuthService {
     );
   }
 
-  checkEmail(email: string): Observable<boolean> {
-    return this.#httpClient.get<boolean>('api/v1/auth/check-email', {
+  isEmailTaken(email: string): Observable<boolean> {
+    return this.#httpClient.get<boolean>('api/v1/auth/is-email-taken', {
       params: { email }
     });
   }
@@ -76,11 +76,7 @@ export class AuthService {
       );
   }
 
-  logOut(): Observable<void> {
-    return this.#httpClient
-      .post<void>('api/v1/auth/logout', {})
-      .pipe(tap(() => this.#token.set('')));
-  }
+  logOut = (): void => this.#token.set('');
 
   validateToken(): Observable<boolean> {
     return this.#httpClient.post<boolean>(

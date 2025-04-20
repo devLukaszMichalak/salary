@@ -42,7 +42,7 @@ export class RegisterValidators {
 
       return timer(300).pipe(
         switchMap(() =>
-          authService.checkEmail(control.value).pipe(
+          authService.isEmailTaken(control.value).pipe(
             map((isTaken: boolean) => {
               return isTaken ? { emailTaken: true } : null;
             })

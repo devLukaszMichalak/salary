@@ -13,6 +13,4 @@ public interface UserService {
   UserDto login(LoginUserCommand cmd);
 
   UserDto getUser(String email);
-
-  void logout();
 }

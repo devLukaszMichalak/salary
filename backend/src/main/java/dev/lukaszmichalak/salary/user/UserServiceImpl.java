@@ -64,9 +64,4 @@ class UserServiceImpl implements UserService {
 
     return getUser(cmd.email());
   }
-
-  @Override
-  public void logout() {
-    SecurityContextHolder.clearContext();
-  }
 }

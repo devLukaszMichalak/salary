@@ -16,8 +16,8 @@ class AuthController {
   private final UserService userService;
   private final JwtService jwtService;
 
-  @GetMapping("/check-email")
-  public boolean checkEmail(@RequestParam String email) {
+  @GetMapping("/is-email-taken")
+  public boolean isEmailTaken(@RequestParam String email) {
     return userService.doesUserExists(email);
   }
 
@@ -33,11 +33,6 @@ class AuthController {
     var user = userService.login(loginUserCommand);
     var token = jwtService.generateToken(user);
     return new JwtResponse(token);
-  }
-
-  @PostMapping("/logout")
-  public void logout() {
-    userService.logout();
   }
 
   @PostMapping("/validate-token")

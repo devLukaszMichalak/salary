@@ -18,8 +18,8 @@ export class NavbarComponent {
   swapTheme = () => this.#themeService.swapTheme();
   oppositeTheme = this.#themeService.oppositeTheme;
 
-  logOut = () =>
-    this.#authService
-      .logOut()
-      .subscribe(() => this.#router.navigate(['/login']));
+  logOut = () => {
+    this.#authService.logOut();
+    this.#router.navigate(['/login']).then();
+  };
 }

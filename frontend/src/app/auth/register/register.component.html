@@ -5,7 +5,9 @@
       <form class="flex flex-col gap-4" [formGroup]="registerForm">
         <div>
           @let emailControl = registerForm.controls.email;
-          <label class="input" [class.input-error]="emailControl.invalid && emailControl.touched">
+          <label
+            class="input"
+            [class.input-error]="emailControl.invalid && emailControl.touched">
             <ng-icon class="pr-1" name="heroAtSymbol" />
             <input
               [formControl]="emailControl"
@@ -31,7 +33,11 @@
 
         <div>
           @let passwordControl = registerForm.controls.password;
-          <label class="input" [class.input-error]="passwordControl.invalid && passwordControl.touched">
+          <label
+            class="input"
+            [class.input-error]="
+              passwordControl.invalid && passwordControl.touched
+            ">
             <ng-icon class="pr-1" name="heroKey" />
             <input
               [formControl]="passwordControl"
@@ -64,7 +70,9 @@
           @let repeatPasswordControl = registerForm.controls.repeatPassword;
           <label
             class="input"
-            [class.input-error]="repeatPasswordControl.invalid && repeatPasswordControl.touched">
+            [class.input-error]="
+              repeatPasswordControl.invalid && repeatPasswordControl.touched
+            ">
             <ng-icon-stack class="pr-1" size="1.2em">
               <ng-icon size="0.9em" name="heroKey"></ng-icon>
               <ng-icon
