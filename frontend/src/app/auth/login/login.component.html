@@ -4,36 +4,43 @@
       <h2 class="card-title mb-4 text-2xl">Login</h2>
       <form class="flex flex-col gap-4" [formGroup]="loginForm">
         <div>
+          @let emailControl = loginForm.controls.email;
           <label
             class="input"
-            [class.input-error]="loginForm.controls.email.invalid">
+            [class.input-error]="emailControl.invalid && emailControl.touched">
             <ng-icon class="pr-1" name="heroAtSymbol" />
             <input
-              [formControl]="loginForm.controls.email"
+              [formControl]="emailControl"
               type="email"
               placeholder="mail@site.com" />
           </label>
-          @if (loginForm.controls.email.hasError('email')) {
-            <p class="validator-hint text-error">Enter valid email address.</p>
-          }
-          @if (loginForm.controls.email.hasError('required')) {
-            <p class="validator-hint text-error">Email is required.</p>
-          }
+          <app-from-error
+            [control]="emailControl"
+            errorCode="email"
+            message="Enter valid email address." />
+          <app-from-error
+            [control]="emailControl"
+            errorCode="required"
+            message="Email is required." />
         </div>
 
         <div>
+          @let passwordControl = loginForm.controls.password;
           <label
             class="input"
-            [class.input-error]="loginForm.controls.password.invalid">
+            [class.input-error]="
+              passwordControl.invalid && passwordControl.touched
+            ">
             <ng-icon class="pr-1" name="heroKey" />
             <input
-              [formControl]="loginForm.controls.password"
+              [formControl]="passwordControl"
               type="password"
               placeholder="Password" />
           </label>
-          @if (loginForm.controls.password.hasError('required')) {
-            <p class="validator-hint text-error">Password is required.</p>
-          }
+          <app-from-error
+            [control]="passwordControl"
+            errorCode="required"
+            message="Password is required." />
         </div>
       </form>
 

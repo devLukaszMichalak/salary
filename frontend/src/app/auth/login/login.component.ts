@@ -6,11 +6,18 @@ import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core';
 import { heroAtSymbol, heroKey } from '@ng-icons/heroicons/outline';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { FromErrorComponent } from '../from-error/from-error.component';
 import type { LoginForm } from './login-form-type';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, NgIcon, AsyncPipe, RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    NgIcon,
+    AsyncPipe,
+    RouterLink,
+    FromErrorComponent
+  ],
   providers: [
     provideIcons({ heroKey, heroAtSymbol }),
     provideNgIconsConfig({

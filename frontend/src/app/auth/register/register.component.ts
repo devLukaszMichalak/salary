@@ -13,12 +13,19 @@ import {
   heroKey
 } from '@ng-icons/heroicons/outline';
 import { AuthService } from '../auth.service';
+import { FromErrorComponent } from '../from-error/from-error.component';
 import type { RegisterForm } from './register-form-type';
 import { RegisterValidators } from './register-validators';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, NgIcon, NgIconStack, RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    NgIcon,
+    NgIconStack,
+    RouterLink,
+    FromErrorComponent
+  ],
   providers: [
     provideIcons({ heroKey, heroAtSymbol, heroArrowUturnRight }),
     provideNgIconsConfig({
