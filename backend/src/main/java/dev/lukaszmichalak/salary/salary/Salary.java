@@ -45,28 +45,31 @@ class Salary {
     if (this == o) return true;
     if (o == null) return false;
     Class<?> oEffectiveClass =
-        o instanceof HibernateProxy
-            ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass()
+        o instanceof HibernateProxy hp
+            ? hp.getHibernateLazyInitializer().getPersistentClass()
             : o.getClass();
     Class<?> thisEffectiveClass =
-        this instanceof HibernateProxy
-            ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass()
+        this instanceof HibernateProxy hp
+            ? hp.getHibernateLazyInitializer().getPersistentClass()
             : this.getClass();
     if (thisEffectiveClass != oEffectiveClass) return false;
     Salary salary = (Salary) o;
     return getId() != null && Objects.equals(getId(), salary.getId());
   }
-
+  
   @Override
   public final int hashCode() {
-    return this instanceof HibernateProxy
-        ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode()
-        : getClass().hashCode();
+    var result =
+            this instanceof HibernateProxy hp
+                    ? hp.getHibernateLazyInitializer().getPersistentClass().hashCode()
+                    : getClass().hashCode();
+    
+    return getId() == null ? result : 31 * result + Long.hashCode(getId());
   }
 
   @Override
   public String toString() {
-    return "%s(id = %d, year = %d, yearlyGrossPay = %s, employeeId = %d, creationDate = %s, lastUpdatedOn = %s)"
+    return "%s(id = %s, year = %s, yearlyGrossPay = %s, employeeId = %s, creationDate = %s, lastUpdatedOn = %s)"
         .formatted(
             getClass().getSimpleName(),
             id,

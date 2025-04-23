@@ -61,12 +61,12 @@ class User implements UserDetails {
     if (this == o) return true;
     if (o == null) return false;
     Class<?> oEffectiveClass =
-        o instanceof HibernateProxy
-            ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass()
+        o instanceof HibernateProxy hp
+            ? hp.getHibernateLazyInitializer().getPersistentClass()
             : o.getClass();
     Class<?> thisEffectiveClass =
-        this instanceof HibernateProxy
-            ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass()
+        this instanceof HibernateProxy hp
+            ? hp.getHibernateLazyInitializer().getPersistentClass()
             : this.getClass();
     if (thisEffectiveClass != oEffectiveClass) return false;
     User user = (User) o;
@@ -75,14 +75,17 @@ class User implements UserDetails {
 
   @Override
   public final int hashCode() {
-    return this instanceof HibernateProxy
-        ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode()
-        : getClass().hashCode();
+    var result =
+        this instanceof HibernateProxy hp
+            ? hp.getHibernateLazyInitializer().getPersistentClass().hashCode()
+            : getClass().hashCode();
+
+    return getId() == null ? result : 31 * result + Long.hashCode(getId());
   }
 
   @Override
   public String toString() {
-    return "%s(id = %d, email = %s, password = %s, creationDate = %s, lastUpdatedOn = %s)"
+    return "%s(id = %s, email = %s, password = %s, creationDate = %s, lastUpdatedOn = %s)"
         .formatted(getClass().getSimpleName(), id, email, password, creationDate, lastUpdatedOn);
   }
 }
