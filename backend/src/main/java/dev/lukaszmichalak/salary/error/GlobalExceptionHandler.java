@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+class GlobalExceptionHandler {
 
   @ExceptionHandler(EmployeeNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  public ErrorResponse handle(EmployeeNotFoundException e) {
+  ErrorResponse handle(EmployeeNotFoundException e) {
     return new ErrorResponse(
         HttpStatus.NOT_FOUND.value(),
         "Employee Not Found",
@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(UsernameNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  public ErrorResponse handle(UsernameNotFoundException e) {
+  ErrorResponse handle(UsernameNotFoundException e) {
     return new ErrorResponse(
         HttpStatus.NOT_FOUND.value(),
         "Username Not Found",
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(ExpiredJwtException.class)
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
-  public ErrorResponse handle(ExpiredJwtException e) {
+  ErrorResponse handle(ExpiredJwtException e) {
     return new ErrorResponse(
         HttpStatus.UNAUTHORIZED.value(),
         "Session Expired",
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(exception = {JwtException.class, MalformedJwtException.class})
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
-  public ErrorResponse handle(JwtException e) {
+  ErrorResponse handle(JwtException e) {
     return new ErrorResponse(
         HttpStatus.UNAUTHORIZED.value(),
         "Authentication Token Error",
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(BadCredentialsException.class)
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
-  public ErrorResponse handle(BadCredentialsException e) {
+  ErrorResponse handle(BadCredentialsException e) {
     return new ErrorResponse(
         HttpStatus.UNAUTHORIZED.value(),
         "Authentication Error",
@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(Exception.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public ErrorResponse handle(Exception e) {
+  ErrorResponse handle(Exception e) {
     return new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR.value(),
         "Server Error",
