@@ -1,6 +1,6 @@
-import type { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { DialogRef } from '@ngneat/dialog';
+import type { ErrorResponse } from '../error-response';
 
 @Component({
   selector: 'app-error-dialog',
@@ -10,10 +10,10 @@ import { DialogRef } from '@ngneat/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ErrorDialogComponent {
-  #ref: DialogRef<{ error: HttpErrorResponse }> = inject(DialogRef);
+  #ref: DialogRef<{ error: ErrorResponse }> = inject(DialogRef);
 
-  get message(): string {
-    return this.#ref.data.error.message;
+  get error(): ErrorResponse {
+    return this.#ref.data.error;
   }
 
   close = () => this.#ref.close();

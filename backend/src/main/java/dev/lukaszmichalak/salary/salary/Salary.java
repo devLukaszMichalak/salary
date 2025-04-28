@@ -56,14 +56,14 @@ class Salary {
     Salary salary = (Salary) o;
     return getId() != null && Objects.equals(getId(), salary.getId());
   }
-  
+
   @Override
   public final int hashCode() {
     var result =
-            this instanceof HibernateProxy hp
-                    ? hp.getHibernateLazyInitializer().getPersistentClass().hashCode()
-                    : getClass().hashCode();
-    
+        this instanceof HibernateProxy hp
+            ? hp.getHibernateLazyInitializer().getPersistentClass().hashCode()
+            : getClass().hashCode();
+
     return getId() == null ? result : 31 * result + Long.hashCode(getId());
   }
 

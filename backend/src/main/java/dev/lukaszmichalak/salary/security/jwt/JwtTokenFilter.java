@@ -34,9 +34,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       throws ServletException, IOException {
 
     final String authHeader = request.getHeader("Authorization");
-
-    final String token =
-        (authHeader != null && authHeader.startsWith("Bearer ")) ? authHeader.substring(7) : null;
+    final String token = getTokenFromHeader(authHeader);
 
     if (token != null) {
 
@@ -60,17 +58,26 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       } catch (ExpiredJwtException e) {
         log.warn("JWT token is expired: {}", e.getMessage());
         SecurityContextHolder.clearContext();
+        throw e;
 
       } catch (JwtException e) {
         log.warn("JWT token processing error: {}", e.getMessage());
         SecurityContextHolder.clearContext();
+        throw e;
 
       } catch (Exception e) {
         log.error("Unexpected error during JWT filter processing", e);
         SecurityContextHolder.clearContext();
+        throw e;
       }
     }
 
     filterChain.doFilter(request, response);
+  }
+
+  private String getTokenFromHeader(String authHeader) {
+    return (authHeader != null && authHeader.startsWith("Bearer "))
+        ? authHeader.substring(7)
+        : null;
   }
 }

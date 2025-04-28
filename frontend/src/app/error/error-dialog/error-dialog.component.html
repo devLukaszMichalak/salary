@@ -1,7 +1,7 @@
 <div class="card bg-base-100 card-md w-full shadow-sm">
   <div class="card-body">
-    <h2 class="card-title">Error!</h2>
-    <p class="py-4">{{ message }}</p>
+    <h2 class="card-title">{{ error.status }} {{ error.title }}</h2>
+    <p class="py-4">{{ error.message }}</p>
     <div class="card-actions justify-end">
       <button class="btn btn-primary" (click)="close()">Close</button>
     </div>

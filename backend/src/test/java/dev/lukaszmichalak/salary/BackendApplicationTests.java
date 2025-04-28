@@ -1,4 +1,4 @@
-package dev.lukaszmichalak.salary.backend;
+package dev.lukaszmichalak.salary;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
