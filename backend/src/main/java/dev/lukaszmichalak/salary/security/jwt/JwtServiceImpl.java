@@ -1,8 +1,8 @@
 package dev.lukaszmichalak.salary.security.jwt;
 
 import dev.lukaszmichalak.salary.user.dto.UserDto;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.vavr.control.Try;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -40,10 +40,8 @@ class JwtServiceImpl implements JwtService {
 
   @Override
   public boolean isTokenValid(String token) {
-    try {
-      return jwtClaimsExtractor.extractExpiration(token).after(Date.from(Instant.now(clock)));
-    } catch (ExpiredJwtException e) {
-      return false;
-    }
+    return Try.of(() -> jwtClaimsExtractor.extractExpiration(token))
+        .map(date -> date.after(Date.from(Instant.now(clock))))
+        .getOrElse(false);
   }
 }

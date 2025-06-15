@@ -1,13 +1,13 @@
 package dev.lukaszmichalak.salary.security.jwt;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
+import io.vavr.control.Try;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,51 +33,39 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       @NonNull FilterChain filterChain)
       throws ServletException, IOException {
 
-    final String authHeader = request.getHeader("Authorization");
-    final String token = getTokenFromHeader(authHeader);
+    final Optional<String> tokenOpt = getAuthToken(request);
 
-    if (token != null) {
+    tokenOpt.ifPresent(
+        token ->
+            Try.run(
+                    () -> {
+                      String email = jwtClaimsExtractor.extractEmail(token);
 
-      try {
+                      Authentication authentication =
+                          SecurityContextHolder.getContext().getAuthentication();
 
-        String email = jwtClaimsExtractor.extractEmail(token);
+                      if (email != null && authentication == null) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                        if (jwtService.isTokenValid(token, email)) {
+                          UsernamePasswordAuthenticationToken authToken =
+                              UsernamePasswordAuthenticationToken.authenticated(
+                                  email, null, List.of());
 
-        if (email != null && authentication == null) {
-
-          if (jwtService.isTokenValid(token, email)) {
-            UsernamePasswordAuthenticationToken authToken =
-                UsernamePasswordAuthenticationToken.authenticated(email, null, List.of());
-
-            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authToken);
-          }
-        }
-
-      } catch (ExpiredJwtException e) {
-        log.warn("JWT token is expired: {}", e.getMessage());
-        SecurityContextHolder.clearContext();
-        throw e;
-
-      } catch (JwtException e) {
-        log.warn("JWT token processing error: {}", e.getMessage());
-        SecurityContextHolder.clearContext();
-        throw e;
-
-      } catch (Exception e) {
-        log.error("Unexpected error during JWT filter processing", e);
-        SecurityContextHolder.clearContext();
-        throw e;
-      }
-    }
+                          authToken.setDetails(
+                              new WebAuthenticationDetailsSource().buildDetails(request));
+                          SecurityContextHolder.getContext().setAuthentication(authToken);
+                        }
+                      }
+                    })
+                .onFailure(_ -> SecurityContextHolder.clearContext()));
 
     filterChain.doFilter(request, response);
   }
 
-  private String getTokenFromHeader(String authHeader) {
-    return (authHeader != null && authHeader.startsWith("Bearer "))
-        ? authHeader.substring(7)
-        : null;
+  private Optional<String> getAuthToken(HttpServletRequest request) {
+    return Optional.of(request)
+        .map(r -> r.getHeader("Authorization"))
+        .filter(h -> h.startsWith("Bearer "))
+        .map(h -> h.substring(7));
   }
 }
