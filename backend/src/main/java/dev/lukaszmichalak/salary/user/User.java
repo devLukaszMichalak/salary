@@ -14,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
+@Getter
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,14 +27,11 @@ class User implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Getter(AccessLevel.PACKAGE)
   private Long id;
 
-  @Getter
   @Column(name = "email", nullable = false, unique = true)
   private String email;
 
-  @Getter
   @Setter(AccessLevel.PACKAGE)
   @Column(name = "password", nullable = false)
   private String password;

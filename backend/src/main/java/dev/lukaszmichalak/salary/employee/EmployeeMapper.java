@@ -1,14 +1,13 @@
 package dev.lukaszmichalak.salary.employee;
 
 import dev.lukaszmichalak.salary.employee.dto.EmployeeDto;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-class EmployeeMapper {
+@Mapper(componentModel = "spring")
+interface EmployeeMapper {
 
-  static EmployeeDto map(Employee employee) {
-    return new EmployeeDto(
-        employee.getId(),
-        employee.getName(),
-        employee.getPosition().getTitle(),
-        employee.getAgency().getName());
-  }
+  @Mapping(target = "positionTitle", source = "position.title")
+  @Mapping(target = "agencyName", source = "agency.name")
+  EmployeeDto toDto(Employee employee);
 }

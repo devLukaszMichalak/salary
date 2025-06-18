@@ -12,17 +12,18 @@ class EmployeeFacadeImpl implements EmployeeFacade {
 
   private final EmployeeRepository employeeRepository;
   private final AgencyRepository agencyRepository;
+  private final EmployeeMapper employeeMapper;
 
   @Override
   public List<EmployeeDto> getEmployees() {
-    return employeeRepository.findAll().stream().map(EmployeeMapper::map).toList();
+    return employeeRepository.findAll().stream().map(employeeMapper::toDto).toList();
   }
 
   @Override
   public EmployeeDto getEmployee(Long employeeId) {
     return employeeRepository
         .findById(employeeId)
-        .map(EmployeeMapper::map)
+        .map(employeeMapper::toDto)
         .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
   }
 
@@ -34,7 +35,7 @@ class EmployeeFacadeImpl implements EmployeeFacade {
   @Override
   public List<EmployeeDto> getEmployeesOfAgency(String agencyName) {
     return employeeRepository.findAllByAgencyName(agencyName).stream()
-        .map(EmployeeMapper::map)
+        .map(employeeMapper::toDto)
         .toList();
   }
 }

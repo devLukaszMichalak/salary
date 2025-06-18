@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 class SalaryServiceImpl implements SalaryService {
 
   private final SalaryRepository salaryRepository;
+  private final SalaryMapper salaryMapper;
 
   @Override
   public List<SalaryDto> getSalaries() {
-    return salaryRepository.findAll().stream().map(SalaryMapper::map).toList();
+    return salaryRepository.findAll().stream().map(salaryMapper::toDto).toList();
   }
 }

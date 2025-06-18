@@ -13,13 +13,12 @@ import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 import org.hibernate.proxy.HibernateProxy;
 
-@Getter(AccessLevel.PACKAGE)
+@Getter()
 @Entity
 @Table(name = "employees")
 @NoArgsConstructor
