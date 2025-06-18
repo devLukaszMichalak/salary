@@ -69,14 +69,7 @@ class Salary {
 
   @Override
   public String toString() {
-    return "%s(id = %s, year = %s, yearlyGrossPay = %s, employeeId = %s, creationDate = %s, lastUpdatedOn = %s)"
-        .formatted(
-            getClass().getSimpleName(),
-            id,
-            year,
-            yearlyGrossPay,
-            employeeId,
-            creationDate,
-            lastUpdatedOn);
+    return "Salary(id = %s, year = %s, yearlyGrossPay = %s, employeeId = %s, creationDate = %s, lastUpdatedOn = %s)"
+        .formatted(id, year, yearlyGrossPay, employeeId, creationDate, lastUpdatedOn);
   }
 }

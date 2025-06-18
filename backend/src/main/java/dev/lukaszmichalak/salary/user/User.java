@@ -85,7 +85,7 @@ class User implements UserDetails {
 
   @Override
   public String toString() {
-    return "%s(id = %s, email = %s, password = %s, creationDate = %s, lastUpdatedOn = %s)"
-        .formatted(getClass().getSimpleName(), id, email, password, creationDate, lastUpdatedOn);
+    return "User(id = %s, email = %s, password = %s, creationDate = %s, lastUpdatedOn = %s)"
+        .formatted(id, email, password, creationDate, lastUpdatedOn);
   }
 }

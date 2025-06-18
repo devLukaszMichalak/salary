@@ -88,7 +88,7 @@ class Employee {
 
   @Override
   public String toString() {
-    return "%s(id = %s, name = %s, creationDate = %s, lastUpdatedOn = %s)"
-        .formatted(getClass().getSimpleName(), id, name, creationDate, lastUpdatedOn);
+    return "Employee(id = %s, name = %s, creationDate = %s, lastUpdatedOn = %s)"
+        .formatted(id, name, creationDate, lastUpdatedOn);
   }
 }

@@ -66,7 +66,7 @@ class Position {
 
   @Override
   public String toString() {
-    return "%s(id = %s, title = %s, creationDate = %s, lastUpdatedOn = %s)"
-        .formatted(getClass().getSimpleName(), id, title, creationDate, lastUpdatedOn);
+    return "Position(id = %s, title = %s, creationDate = %s, lastUpdatedOn = %s)"
+        .formatted(id, title, creationDate, lastUpdatedOn);
   }
 }
