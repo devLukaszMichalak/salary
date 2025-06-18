@@ -1,5 +1,6 @@
 package dev.lukaszmichalak.salary.security.jwt;
 
+import io.vavr.control.Option;
 import io.vavr.control.Try;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -7,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,39 +33,35 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       @NonNull FilterChain filterChain)
       throws ServletException, IOException {
 
-    final Optional<String> tokenOpt = getAuthToken(request);
+    Option<String> tokenOpt = getAuthToken(request);
 
-    tokenOpt.ifPresent(
-        token ->
-            Try.run(
-                    () -> {
-                      String email = jwtClaimsExtractor.extractEmail(token);
-
-                      Authentication authentication =
-                          SecurityContextHolder.getContext().getAuthentication();
-
-                      if (email != null && authentication == null) {
-
-                        if (jwtService.isTokenValid(token, email)) {
-                          UsernamePasswordAuthenticationToken authToken =
-                              UsernamePasswordAuthenticationToken.authenticated(
-                                  email, null, List.of());
-
-                          authToken.setDetails(
-                              new WebAuthenticationDetailsSource().buildDetails(request));
-                          SecurityContextHolder.getContext().setAuthentication(authToken);
-                        }
-                      }
-                    })
-                .onFailure(_ -> SecurityContextHolder.clearContext()));
+    tokenOpt
+        .toTry()
+        .flatMap(token -> Try.run(() -> authenticate(request, token)))
+        .onFailure(_ -> SecurityContextHolder.clearContext());
 
     filterChain.doFilter(request, response);
   }
 
-  private Optional<String> getAuthToken(HttpServletRequest request) {
-    return Optional.of(request)
+  private Option<String> getAuthToken(HttpServletRequest request) {
+    return Option.of(request)
         .map(r -> r.getHeader("Authorization"))
         .filter(h -> h.startsWith("Bearer "))
         .map(h -> h.substring(7));
+  }
+
+  private void authenticate(HttpServletRequest request, String token) {
+    String email = jwtClaimsExtractor.extractEmail(token);
+
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+    if (email != null && authentication == null) {
+
+      if (jwtService.isTokenValid(token, email)) {
+        var authToken = UsernamePasswordAuthenticationToken.authenticated(email, null, List.of());
+        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+      }
+    }
   }
 }
