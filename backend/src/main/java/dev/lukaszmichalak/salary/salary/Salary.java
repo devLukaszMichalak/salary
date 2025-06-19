@@ -3,7 +3,7 @@ package dev.lukaszmichalak.salary.salary;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
-`import lombok.Getter;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;

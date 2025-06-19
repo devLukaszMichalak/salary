@@ -1,9 +1,13 @@
 package dev.lukaszmichalak.salary.employee;
 
 import dev.lukaszmichalak.salary.employee.dto.EmployeeDto;
+import dev.lukaszmichalak.salary.employee.dto.EmployeeSearchCriteria;
 import dev.lukaszmichalak.salary.employee.exception.EmployeeNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,5 +41,20 @@ class EmployeeFacadeImpl implements EmployeeFacade {
     return employeeRepository.findAllByAgencyName(agencyName).stream()
         .map(employeeMapper::toDto)
         .toList();
+  }
+
+  @Override
+  public Page<EmployeeDto> getEmployeesBySpecification(
+      EmployeeSearchCriteria criteria, Pageable pageable) {
+
+    Specification<Employee> spec = EmployeeSpecifications.fromSearchCriteria(criteria);
+    return employeeRepository.findAll(spec, pageable).map(employeeMapper::toDto);
+  }
+
+  @Override
+  public List<EmployeeDto> getEmployeesBySpecification(EmployeeSearchCriteria criteria) {
+
+    Specification<Employee> spec = EmployeeSpecifications.fromSearchCriteria(criteria);
+    return employeeRepository.findAll(spec).stream().map(employeeMapper::toDto).toList();
   }
 }
