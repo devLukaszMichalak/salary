@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,9 +34,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       @Nonnull FilterChain filterChain)
       throws ServletException, IOException {
 
-    Option<String> tokenOpt = getAuthToken(request);
+    Optional<String> tokenOpt = getAuthToken(request);
 
-    tokenOpt
+    Option.ofOptional(tokenOpt)
         .toTry()
         .flatMap(token -> Try.run(() -> authenticate(request, token)))
         .onFailure(_ -> SecurityContextHolder.clearContext());
@@ -43,8 +44,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     filterChain.doFilter(request, response);
   }
 
-  private Option<String> getAuthToken(HttpServletRequest request) {
-    return Option.of(request)
+  private Optional<String> getAuthToken(HttpServletRequest request) {
+    return Optional.of(request)
         .map(r -> r.getHeader("Authorization"))
         .filter(h -> h.startsWith("Bearer "))
         .map(h -> h.substring(7));

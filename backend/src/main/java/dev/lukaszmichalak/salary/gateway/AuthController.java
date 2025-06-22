@@ -1,7 +1,7 @@
 package dev.lukaszmichalak.salary.gateway;
 
-import dev.lukaszmichalak.salary.gateway.command.LoginUserCommand;
-import dev.lukaszmichalak.salary.gateway.command.RegisterUserCommand;
+import dev.lukaszmichalak.salary.gateway.request.LoginUserCommand;
+import dev.lukaszmichalak.salary.gateway.request.RegisterUserCommand;
 import dev.lukaszmichalak.salary.gateway.response.JwtResponse;
 import dev.lukaszmichalak.salary.security.jwt.JwtService;
 import dev.lukaszmichalak.salary.user.UserService;

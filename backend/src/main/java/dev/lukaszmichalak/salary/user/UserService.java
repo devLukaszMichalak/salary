@@ -1,7 +1,7 @@
 package dev.lukaszmichalak.salary.user;
 
-import dev.lukaszmichalak.salary.gateway.command.LoginUserCommand;
-import dev.lukaszmichalak.salary.gateway.command.RegisterUserCommand;
+import dev.lukaszmichalak.salary.gateway.request.LoginUserCommand;
+import dev.lukaszmichalak.salary.gateway.request.RegisterUserCommand;
 import dev.lukaszmichalak.salary.user.dto.UserDto;
 
 public interface UserService {

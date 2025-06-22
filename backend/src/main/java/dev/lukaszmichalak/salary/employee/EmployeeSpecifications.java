@@ -1,6 +1,6 @@
 package dev.lukaszmichalak.salary.employee;
 
-import dev.lukaszmichalak.salary.employee.dto.EmployeeSearchCriteria;
+import dev.lukaszmichalak.salary.gateway.request.EmployeeQuery;
 import org.springframework.data.jpa.domain.Specification;
 
 final class EmployeeSpecifications {
@@ -9,7 +9,7 @@ final class EmployeeSpecifications {
     throw new UnsupportedOperationException();
   }
 
-  static Specification<Employee> fromSearchCriteria(EmployeeSearchCriteria criteria) {
+  static Specification<Employee> fromSearchCriteria(EmployeeQuery criteria) {
     Specification<Employee> spec = (_, _, cb) -> cb.conjunction();
 
     if (criteria.name() != null && !criteria.name().isBlank()) {

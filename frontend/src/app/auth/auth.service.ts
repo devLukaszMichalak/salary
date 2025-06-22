@@ -58,18 +58,18 @@ export class AuthService {
     });
   }
 
-  login(loginCredentials: LoginUserCommand): Observable<boolean> {
+  login(command: LoginUserCommand): Observable<boolean> {
     return this.#httpClient
-      .post<JwtResponse>('api/v1/auth/login', loginCredentials)
+      .post<JwtResponse>('api/v1/auth/login', command)
       .pipe(
         tap(jwt => this.#token.set(jwt.token)),
         map(jwt => !!jwt.token)
       );
   }
 
-  register(registerCredentials: RegisterUserCommand): Observable<boolean> {
+  register(command: RegisterUserCommand): Observable<boolean> {
     return this.#httpClient
-      .post<JwtResponse>('api/v1/auth/register', registerCredentials)
+      .post<JwtResponse>('api/v1/auth/register', command)
       .pipe(
         tap(jwt => this.#token.set(jwt.token)),
         map(jwt => !!jwt.token)

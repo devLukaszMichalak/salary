@@ -1,1 +1,9 @@
-criteria
+<button (click)="search()">search</button>
+
+@if (employeePage$ | async; as employeePage) {
+  @for (employee of employeePage.content; track employee.id) {
+    {{ employee.name }} with id: {{ employee.id }}
+  }
+} @else {
+  loading
+}

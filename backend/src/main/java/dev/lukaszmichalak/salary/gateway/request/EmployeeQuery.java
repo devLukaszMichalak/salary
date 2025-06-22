@@ -1,6 +1,6 @@
-package dev.lukaszmichalak.salary.employee.dto;
+package dev.lukaszmichalak.salary.gateway.request;
 
 import jakarta.annotation.Nullable;
 
-public record EmployeeSearchCriteria(
+public record EmployeeQuery(
     @Nullable String name, @Nullable String positionTitle, @Nullable String agencyName) {}

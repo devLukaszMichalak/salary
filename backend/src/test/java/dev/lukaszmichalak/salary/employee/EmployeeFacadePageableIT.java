@@ -3,7 +3,7 @@ package dev.lukaszmichalak.salary.employee;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.lukaszmichalak.salary.employee.dto.EmployeeDto;
-import dev.lukaszmichalak.salary.employee.dto.EmployeeSearchCriteria;
+import dev.lukaszmichalak.salary.gateway.request.EmployeeQuery;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +22,7 @@ class EmployeeFacadePageableIT {
   @Test
   void shouldReturnPageableResults() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria("Joe", null, null);
+    EmployeeQuery criteria = new EmployeeQuery("Joe", null, null);
     Pageable pageable = PageRequest.of(0, 10);
 
     // when
@@ -40,7 +40,7 @@ class EmployeeFacadePageableIT {
   @Test
   void shouldReturnEmptyPageWhenNoResults() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria("NonExistentEmployeeName", null, null);
+    EmployeeQuery criteria = new EmployeeQuery("NonExistentEmployeeName", null, null);
     Pageable pageable = PageRequest.of(0, 10);
 
     // when
@@ -56,7 +56,7 @@ class EmployeeFacadePageableIT {
   @Test
   void shouldHandleNullCriteria() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria(null, null, null);
+    EmployeeQuery criteria = new EmployeeQuery(null, null, null);
     Pageable pageable = PageRequest.of(0, 10);
 
     // when

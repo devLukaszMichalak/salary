@@ -3,7 +3,7 @@ package dev.lukaszmichalak.salary.employee;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.lukaszmichalak.salary.employee.dto.EmployeeDto;
-import dev.lukaszmichalak.salary.employee.dto.EmployeeSearchCriteria;
+import dev.lukaszmichalak.salary.gateway.request.EmployeeQuery;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnByName() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria("Joe", null, null);
+    EmployeeQuery criteria = new EmployeeQuery("Joe", null, null);
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -33,7 +33,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnByNameCaseInsensitive() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria("joe", null, null);
+    EmployeeQuery criteria = new EmployeeQuery("joe", null, null);
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -47,7 +47,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnByPartialName() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria("wal", null, null);
+    EmployeeQuery criteria = new EmployeeQuery("wal", null, null);
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -61,7 +61,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnByPositionTitle() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria(null, "ACCOUNTANT", null);
+    EmployeeQuery criteria = new EmployeeQuery(null, "ACCOUNTANT", null);
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -75,7 +75,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnByPositionTitleCaseInsensitive() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria(null, "accountant", null);
+    EmployeeQuery criteria = new EmployeeQuery(null, "accountant", null);
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -89,7 +89,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnByPartialPositionTitle() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria(null, "ACCOUN", null);
+    EmployeeQuery criteria = new EmployeeQuery(null, "ACCOUN", null);
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -103,7 +103,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnByAgencyName() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria(null, null, "AGRICULTURE");
+    EmployeeQuery criteria = new EmployeeQuery(null, null, "AGRICULTURE");
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -117,7 +117,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnByAgencyNameCaseInsensitive() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria(null, null, "agriculture");
+    EmployeeQuery criteria = new EmployeeQuery(null, null, "agriculture");
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -131,7 +131,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnByPartialAgencyName() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria(null, null, "agricul");
+    EmployeeQuery criteria = new EmployeeQuery(null, null, "agricul");
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -145,8 +145,8 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnByMultipleCriteria() {
     // given
-    EmployeeSearchCriteria criteria =
-        new EmployeeSearchCriteria("Joe", "ACCOUNTANT", "AGRICULTURE");
+    EmployeeQuery criteria =
+        new EmployeeQuery("Joe", "ACCOUNTANT", "AGRICULTURE");
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -163,8 +163,8 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnEmptyWhenNotFoundName() {
     // given
-    EmployeeSearchCriteria criteria =
-        new EmployeeSearchCriteria("NonExistentEmployeeName", null, null);
+    EmployeeQuery criteria =
+        new EmployeeQuery("NonExistentEmployeeName", null, null);
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -177,8 +177,8 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnEmptyWhenNotFoundPositionTitle() {
     // given
-    EmployeeSearchCriteria criteria =
-        new EmployeeSearchCriteria(null, "NonExistentPositionTitle", null);
+    EmployeeQuery criteria =
+        new EmployeeQuery(null, "NonExistentPositionTitle", null);
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -191,8 +191,8 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnEmptyWhenNotFoundAgencyName() {
     // given
-    EmployeeSearchCriteria criteria =
-        new EmployeeSearchCriteria(null, null, "NonExistentAgencyName");
+    EmployeeQuery criteria =
+        new EmployeeQuery(null, null, "NonExistentAgencyName");
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -205,7 +205,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnAllWhenNullCriteria() {
     // given
-    EmployeeSearchCriteria criteria = new EmployeeSearchCriteria(null, null, null);
+    EmployeeQuery criteria = new EmployeeQuery(null, null, null);
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);

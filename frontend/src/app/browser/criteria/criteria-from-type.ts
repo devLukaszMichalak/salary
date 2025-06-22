@@ -1,6 +1,7 @@
-import { FormControl, type FormGroup } from '@angular/forms';
+import type { FormControl } from '@angular/forms';
+import { type FormGroup } from '@angular/forms';
 
-export type CriteriaForm = FormGroup<{
+export type EmployeeCriteriaForm = FormGroup<{
   name: FormControl<string>;
   positionTitle: FormControl<string>;
   agencyName: FormControl<string>;
