@@ -1,25 +1,17 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { inject, Injectable } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { combineLatest, type Observable, Subject, switchMap } from 'rxjs';
 import type { EmployeeQuery } from '../browser/criteria/employee-query';
-import type { Page } from '../common/page';
-import type { PageQuery } from '../common/page-query';
+import type { Page } from '../page/page';
+import type { PageQuery } from '../page/page-query';
+import { PageService } from '../page/page.service';
 import type { Employee } from './employee';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class EmployeeCriteriaService {
   #httpClient = inject(HttpClient);
-
-  #currentPage = signal<number>(0);
-  #pageSize = signal<number>(10);
-
-  #pageQuery = computed(() => ({
-    page: this.#currentPage(),
-    size: this.#pageSize()
-  })); //todo page logic in a separate service
+  #pageService = inject(PageService);
 
   #searchSubject$ = new Subject<EmployeeQuery>();
 
@@ -38,7 +30,7 @@ export class EmployeeCriteriaService {
 
   #employeePage$ = combineLatest([
     this.#searchSubject$,
-    toObservable(this.#pageQuery)
+    this.#pageService.pageQuery$
   ]).pipe(
     switchMap(([query, page]) => this.#getEmployeesByCriteria(query, page)),
     takeUntilDestroyed()
@@ -53,10 +45,10 @@ export class EmployeeCriteriaService {
   }
 
   nextPage() {
-    this.#currentPage.update(value => value + 1);
+    this.#pageService.nextPage();
   }
 
   previousPage() {
-    this.#currentPage.update(value => value - 1);
+    this.#pageService.previousPage();
   }
 }

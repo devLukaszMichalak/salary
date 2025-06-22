@@ -3,8 +3,8 @@ import { alreadyLoggedInGuard } from './auth/already-logged-in.guard';
 import { canActivateProtectedGuard } from './auth/can-activate-protected.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { BrowserComponent } from './browser/browser.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const routes: Routes = [
   {
@@ -14,8 +14,8 @@ export const routes: Routes = [
     children: [
       {
         path: 'browser',
-        component: BrowserComponent,
-      },
+        component: BrowserComponent
+      }
     ]
   },
   {
