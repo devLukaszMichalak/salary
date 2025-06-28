@@ -1,9 +1,9 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { EmployeeCriteriaService } from '../employee/employee-criteria.service';
 import { PageService } from '../page/page.service';
-import { CriteriaComponent } from './criteria/criteria.component';
 import { PaginationComponent } from '../page/pagination/pagination.component';
-import { AsyncPipe } from '@angular/common';
+import { CriteriaComponent } from './criteria/criteria.component';
 
 @Component({
   selector: 'app-browser',
@@ -14,7 +14,6 @@ import { AsyncPipe } from '@angular/common';
 })
 export class BrowserComponent {
   #employeeCriteriaService = inject(EmployeeCriteriaService);
-  
+
   employeePage$ = this.#employeeCriteriaService.employeePage$;
-  
 }

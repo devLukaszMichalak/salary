@@ -9,8 +9,7 @@ describe('BrowserComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [BrowserComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BrowserComponent);
     component = fixture.componentInstance;

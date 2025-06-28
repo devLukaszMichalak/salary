@@ -9,8 +9,7 @@ describe('CriteriaComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [CriteriaComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CriteriaComponent);
     component = fixture.componentInstance;
