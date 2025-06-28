@@ -2,6 +2,10 @@ spring:
   application:
     name: backend
 
+  threads:
+    virtual:
+      enabled: true
+
   datasource:
     url: jdbc:sqlite:salary.db?busy_timeout=3000
     driver-class-name: org.sqlite.JDBC
