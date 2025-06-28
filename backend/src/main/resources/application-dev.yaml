@@ -1,5 +1,5 @@
 spring:
   datasource:
-    url: jdbc:sqlite:salary-dev.db
+    url: jdbc:sqlite:data/salary-dev.db?busy_timeout=3000
   jpa:
     show-sql: true

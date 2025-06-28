@@ -7,7 +7,7 @@ spring:
       enabled: true
 
   datasource:
-    url: jdbc:sqlite:salary.db?busy_timeout=3000
+    url: jdbc:sqlite:data/salary.db?busy_timeout=3000
     driver-class-name: org.sqlite.JDBC
 
   flyway:

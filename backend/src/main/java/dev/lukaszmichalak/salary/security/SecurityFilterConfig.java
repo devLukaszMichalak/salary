@@ -52,6 +52,8 @@ class SecurityFilterConfig {
                     .anonymous()
                     .requestMatchers(HttpMethod.GET, "/api/v1/auth/is-email-taken")
                     .anonymous()
+                    .requestMatchers("/", "/*.js", "/*.css", "/index.html", "/favicon.ico")
+                    .permitAll()
                     .anyRequest()
                     .authenticated())
         .build();
