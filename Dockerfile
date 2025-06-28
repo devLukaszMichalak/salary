@@ -1,4 +1,17 @@
-FROM cypress/browsers:node-24.0.0-chrome-136.0.7103.92-1-ff-138.0.1-edge-136.0.3240.50-1 AS frontend-builder
+FROM node:24.3.0 AS node-with-browsers
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    gnupg \
+    ca-certificates \
+    && curl -fsSL https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-linux-signing-keyring.gpg \
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-linux-signing-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends google-chrome-stable firefox-esr \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+FROM node-with-browsers AS frontend-builder
 
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
