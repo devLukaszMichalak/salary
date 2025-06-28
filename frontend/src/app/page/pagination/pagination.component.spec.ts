@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { PageService } from '../page.service';
 import { PaginationComponent } from './pagination.component';
 
 describe('PaginationComponent', () => {
@@ -8,11 +8,19 @@ describe('PaginationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PaginationComponent]
+      imports: [PaginationComponent],
+      providers: [PageService]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PaginationComponent);
+    fixture.componentRef.setInput('page', {
+      size: 10,
+      number: 0,
+      totalElements: 100,
+      totalPages: 10
+    });
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
 

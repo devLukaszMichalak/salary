@@ -6,7 +6,7 @@ RUN npm ci
 
 COPY frontend/ ./
 RUN npm run lint
-RUN npm run test-nowatch
+RUN npm run test-headless
 RUN npm run build
 
 FROM maven:3.9.10-eclipse-temurin-24-alpine AS backend-builder
