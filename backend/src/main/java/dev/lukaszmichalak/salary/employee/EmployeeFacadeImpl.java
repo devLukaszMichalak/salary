@@ -1,8 +1,8 @@
 package dev.lukaszmichalak.salary.employee;
 
 import dev.lukaszmichalak.salary.employee.dto.EmployeeDto;
-import dev.lukaszmichalak.salary.gateway.request.EmployeeQuery;
 import dev.lukaszmichalak.salary.employee.exception.EmployeeNotFoundException;
+import dev.lukaszmichalak.salary.gateway.request.EmployeeQuery;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -44,8 +44,7 @@ class EmployeeFacadeImpl implements EmployeeFacade {
   }
 
   @Override
-  public Page<EmployeeDto> getEmployeesBySpecification(
-          EmployeeQuery criteria, Pageable pageable) {
+  public Page<EmployeeDto> getEmployeesBySpecification(EmployeeQuery criteria, Pageable pageable) {
 
     Specification<Employee> spec = EmployeeSpecifications.fromSearchCriteria(criteria);
     return employeeRepository.findAll(spec, pageable).map(employeeMapper::toDto);

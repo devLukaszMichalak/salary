@@ -16,8 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles({"dev"})
 class EmployeeFacadePageableIT {
 
-  @Autowired
-  private EmployeeFacade employeeFacade;
+  @Autowired private EmployeeFacade employeeFacade;
 
   @Test
   void shouldReturnPageableResults() {
@@ -66,4 +65,4 @@ class EmployeeFacadePageableIT {
     assertThat(result).isNotNull();
     assertThat(result.getContent()).isNotNull();
   }
-} 
+}

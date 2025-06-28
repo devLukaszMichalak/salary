@@ -145,8 +145,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnByMultipleCriteria() {
     // given
-    EmployeeQuery criteria =
-        new EmployeeQuery("Joe", "ACCOUNTANT", "AGRICULTURE");
+    EmployeeQuery criteria = new EmployeeQuery("Joe", "ACCOUNTANT", "AGRICULTURE");
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -163,8 +162,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnEmptyWhenNotFoundName() {
     // given
-    EmployeeQuery criteria =
-        new EmployeeQuery("NonExistentEmployeeName", null, null);
+    EmployeeQuery criteria = new EmployeeQuery("NonExistentEmployeeName", null, null);
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -177,8 +175,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnEmptyWhenNotFoundPositionTitle() {
     // given
-    EmployeeQuery criteria =
-        new EmployeeQuery(null, "NonExistentPositionTitle", null);
+    EmployeeQuery criteria = new EmployeeQuery(null, "NonExistentPositionTitle", null);
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);
@@ -191,8 +188,7 @@ class EmployeeSpecificationsIT {
   @Test
   void shouldReturnEmptyWhenNotFoundAgencyName() {
     // given
-    EmployeeQuery criteria =
-        new EmployeeQuery(null, null, "NonExistentAgencyName");
+    EmployeeQuery criteria = new EmployeeQuery(null, null, "NonExistentAgencyName");
 
     // when
     List<EmployeeDto> result = employeeFacade.getEmployeesBySpecification(criteria);

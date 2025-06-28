@@ -24,10 +24,8 @@ class AuthController {
 
   @GetMapping("/is-email-taken")
   public boolean isEmailTaken(
-      @RequestParam
-      @NotNull(message = "Email is required")
-      @Email(message = "Invalid email format")
-      String email) {
+      @RequestParam @NotNull(message = "Email is required") @Email(message = "Invalid email format")
+          String email) {
     return userService.doesUserExists(email);
   }
 
@@ -48,9 +46,11 @@ class AuthController {
   @PostMapping("/validate-token")
   public boolean validateToken(
       @RequestHeader("Authorization")
-      @NotNull(message = "Authorization header is required")
-      @Pattern(regexp = "^Bearer .+$", message = "Authorization header must start with 'Bearer '")
-      String authHeader) {
+          @NotNull(message = "Authorization header is required")
+          @Pattern(
+              regexp = "^Bearer .+$",
+              message = "Authorization header must start with 'Bearer '")
+          String authHeader) {
     String token = authHeader.substring(7);
     return jwtService.isTokenValid(token);
   }

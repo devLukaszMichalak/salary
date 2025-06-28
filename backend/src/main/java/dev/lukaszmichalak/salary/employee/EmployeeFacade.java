@@ -16,6 +16,6 @@ public interface EmployeeFacade {
   List<EmployeeDto> getEmployeesOfAgency(String agencyName);
 
   Page<EmployeeDto> getEmployeesBySpecification(EmployeeQuery criteria, Pageable pageable);
-  
+
   List<EmployeeDto> getEmployeesBySpecification(EmployeeQuery criteria);
 }
