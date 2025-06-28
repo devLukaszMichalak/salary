@@ -12,11 +12,16 @@ RUN npm run build
 FROM maven:3.9.10-eclipse-temurin-24-alpine AS backend-builder
 
 WORKDIR /app/backend
-COPY backend/ ./
-COPY --from=frontend-builder /app/frontend/dist/frontend/browser/* /app/backend/src/main/resources/static
 
+COPY backend/pom.xml ./
+RUN mvn dependency:go-offline
+
+COPY backend/ ./
 RUN mvn spotless:check
+
+COPY --from=frontend-builder /app/frontend/dist/frontend/browser/* /app/backend/src/main/resources/static
 COPY data/salary-dev.db data/salary-dev.db
+
 RUN mvn clean package
 
 
