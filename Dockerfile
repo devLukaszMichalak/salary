@@ -1,4 +1,4 @@
-FROM node:24.3.0-alpine AS frontend-builder
+FROM cypress/browsers:node-24.0.0-chrome-136.0.7103.92-1-ff-138.0.1-edge-136.0.3240.50-1 AS frontend-builder
 
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
@@ -6,7 +6,7 @@ RUN npm ci
 
 COPY frontend/ ./
 RUN npm run lint
-RUN npm run test-headless
+RUN npm run test-nowatch
 RUN npm run build
 
 FROM maven:3.9.10-eclipse-temurin-24-alpine AS backend-builder
@@ -23,7 +23,6 @@ COPY --from=frontend-builder /app/frontend/dist/frontend/browser/* /app/backend/
 COPY data/salary-dev.db data/salary-dev.db
 
 RUN mvn clean package
-
 
 FROM eclipse-temurin:24-jdk-alpine
 

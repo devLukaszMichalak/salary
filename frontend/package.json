@@ -9,7 +9,7 @@
     "ng": "ng",
     "start": "ng serve",
     "test": "ng test",
-    "test-headless": "ng test --source-map=false --browsers=ChromeHeadless,FirefoxHeadless --watch=false",
+    "test-nowatch": "ng test --source-map=false --watch=false",
     "watch": "ng build --watch --configuration development"
   },
   "private": true,
