@@ -20,6 +20,6 @@ export class NavbarComponent {
 
   logOut = () => {
     this.#authService.logOut();
-    this.#router.navigate(['/login']).then();
+    void this.#router.navigate(['/login']);
   };
 }

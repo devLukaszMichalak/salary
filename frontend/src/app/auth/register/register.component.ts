@@ -73,7 +73,7 @@ export class RegisterComponent {
     this.isLoading.set(true);
     this.#authService
       .register(this.registerForm.getRawValue())
-      .subscribe(() => this.#router.navigate(['dashboard']))
+      .subscribe(() => void this.#router.navigate(['dashboard']))
       .add(() => this.isLoading.set(false));
   }
 }

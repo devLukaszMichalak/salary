@@ -32,7 +32,7 @@ export class AuthService {
     return this.#token.asReadonly();
   }
 
-  resetToken() {
+  resetToken(): void {
     this.#token.set('');
   }
 

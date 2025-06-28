@@ -36,11 +36,11 @@ export class EmployeeCriteriaService {
     takeUntilDestroyed()
   );
 
-  get employeePage$() {
+  get employeePage$(): Observable<Page<Employee>> {
     return this.#employeePage$;
   }
 
-  search(query: EmployeeQuery) {
+  search(query: EmployeeQuery): void {
     this.#searchSubject$.next(query);
   }
 }

@@ -9,10 +9,10 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const dialogService = inject(DialogService);
 
   return next(req).pipe(
-    catchError((error: HttpErrorResponse) => {
+    catchError((error: unknown) => {
       dialogService.open(ErrorDialogComponent, {
         data: {
-          error: error.error as ErrorResponse
+          error: (error as HttpErrorResponse).error as ErrorResponse
         }
       });
 

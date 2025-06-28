@@ -45,7 +45,7 @@ export class LoginComponent {
 
     this.#authService
       .login(this.loginForm.getRawValue())
-      .subscribe(() => this.#router.navigate(['dashboard']))
+      .subscribe(() => void this.#router.navigate(['dashboard']))
       .add(() => this.loading$.next(false));
   }
 }
