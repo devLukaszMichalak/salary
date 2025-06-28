@@ -1,12 +1,11 @@
-import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { EmployeeCriteriaService } from '../../employee/employee-criteria.service';
 import type { EmployeeCriteriaForm } from './criteria-from-type';
 
 @Component({
   selector: 'app-criteria',
-  imports: [AsyncPipe],
+  imports: [ReactiveFormsModule],
   templateUrl: './criteria.component.html',
   styleUrl: './criteria.component.css'
 })
@@ -20,17 +19,11 @@ export class CriteriaComponent {
     agencyName: ''
   });
 
-  employeePage$ = this.#employeeCriteriaService.employeePage$;
-
   search() {
     this.#employeeCriteriaService.search(this.criteriaForm.getRawValue());
   }
 
-  nextPage() {
-    this.#employeeCriteriaService.nextPage();
-  }
-
-  previousPage() {
-    this.#employeeCriteriaService.previousPage();
+  clear() {
+    this.criteriaForm.reset();
   }
 }

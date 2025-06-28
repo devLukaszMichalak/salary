@@ -1,9 +1,11 @@
 export type Page<T> = {
   content: T[];
-  page: {
-    size: number;
-    number: number;
-    totalElements: number;
-    totalPages: number;
-  };
+  page: PageMetadata;
+};
+
+export type PageMetadata = {
+  size: number;
+  number: number;
+  totalElements: number;
+  totalPages: number;
 };

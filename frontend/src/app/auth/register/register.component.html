@@ -12,7 +12,7 @@
             <input
               [formControl]="emailControl"
               type="email"
-              placeholder="mail@site.com" />
+              placeholder="Email" />
             @if (emailControl.pending) {
               <span class="loading loading-spinner loading-xs"></span>
             }
@@ -96,9 +96,9 @@
         </div>
       </form>
 
-      <div class="card-actions justify-end mt-2 mr-4">
+      <div class="card-actions mt-2 mr-4">
         <button
-          class="btn btn-primary"
+          class="btn btn-primary w-full"
           [disabled]="!registerForm.valid || isLoading()"
           (click)="register()">
           Sign up

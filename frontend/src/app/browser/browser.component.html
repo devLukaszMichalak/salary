@@ -1,2 +1,14 @@
-<p>browser works!</p>
 <app-criteria/>
+
+@let  employeePage = employeePage$ | async;
+
+@if (employeePage) {
+  @for (employee of employeePage.content; track employee.id) {
+    {{ employee.name }} with id: {{ employee.id }}
+  }
+
+  <app-pagination [page]="employeePage.page"/>
+} @else {
+  loading...
+}
+

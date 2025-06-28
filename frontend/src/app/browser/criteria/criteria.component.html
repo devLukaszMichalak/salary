@@ -1,9 +1,19 @@
-<button (click)="search()">search</button>
+<form class="flex flex-col gap-4" [formGroup]="criteriaForm">
+  <label class="input">
+    Name:
+    <input [formControl]="criteriaForm.controls.name" type="text" />
+  </label>
+  <label class="input">
+    Position title:
+    <input [formControl]="criteriaForm.controls.positionTitle" type="text" />
+  </label>
+  <label class="input">
+    Agency name:
+    <input [formControl]="criteriaForm.controls.agencyName" type="text" />
+  </label>
 
-@if (employeePage$ | async; as employeePage) {
-  @for (employee of employeePage.content; track employee.id) {
-    {{ employee.name }} with id: {{ employee.id }}
-  }
-} @else {
-  loading
-}
+  <div class="flex w-xs gap-x-3">
+    <button class="btn flex-1" (click)="clear()">Clear</button>
+    <button class="btn btn-primary flex-1" (click)="search()">Search</button>
+  </div>
+</form>

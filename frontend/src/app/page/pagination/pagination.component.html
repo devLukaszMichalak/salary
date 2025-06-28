@@ -1,0 +1,17 @@
+<div class="join">
+  <button
+    class="join-item btn"
+    [disabled]="isFirstPage()"
+    (click)="previousPage()">
+    «
+  </button>
+
+  <button class="join-item btn pointer-events-none" tabindex="-1">
+    Page {{ page().totalPages === 0 ? 0 : page().number + 1 }} of
+    {{ page().totalPages }}
+  </button>
+
+  <button class="join-item btn" [disabled]="isLastPage()" (click)="nextPage()">
+    »
+  </button>
+</div>

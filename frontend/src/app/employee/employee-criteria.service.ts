@@ -43,12 +43,4 @@ export class EmployeeCriteriaService {
   search(query: EmployeeQuery) {
     this.#searchSubject$.next(query);
   }
-
-  nextPage() {
-    this.#pageService.nextPage();
-  }
-
-  previousPage() {
-    this.#pageService.previousPage();
-  }
 }
