@@ -1,7 +1,6 @@
 package dev.lukaszmichalak.salary.security.jwt;
 
 import io.vavr.control.Option;
-import io.vavr.control.Try;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,19 +32,18 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       @Nonnull FilterChain filterChain)
       throws ServletException, IOException {
 
-    Optional<String> tokenOpt = getAuthToken(request);
-
-    Option.ofOptional(tokenOpt)
+    getAuthToken(request)
         .toTry()
-        .flatMap(token -> Try.run(() -> authenticate(request, token)))
+        .andThenTry(token -> authenticate(request, token))
         .onFailure(_ -> SecurityContextHolder.clearContext());
 
     filterChain.doFilter(request, response);
   }
 
-  private Optional<String> getAuthToken(HttpServletRequest request) {
-    return Optional.of(request)
+  private Option<String> getAuthToken(HttpServletRequest request) {
+    return Option.of(request)
         .map(r -> r.getHeader("Authorization"))
+        .flatMap(Option::of)
         .filter(h -> h.startsWith("Bearer "))
         .map(h -> h.substring(7));
   }
