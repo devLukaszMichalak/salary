@@ -37,26 +37,26 @@ class Employee {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "name", nullable = false)
+  @Column(nullable = false)
   private String name;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @Cascade(CascadeType.PERSIST)
-  @JoinColumn(name = "position_id", nullable = false)
+  @JoinColumn(nullable = false)
   private Position position;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @Cascade(CascadeType.PERSIST)
-  @JoinColumn(name = "agency_id", nullable = false)
+  @JoinColumn(nullable = false)
   private Agency agency;
 
   @CreationTimestamp(source = SourceType.DB)
-  @Column(name = "creation_date", nullable = false, updatable = false)
+  @Column(nullable = false, updatable = false)
   private LocalDateTime creationDate;
 
   @UpdateTimestamp(source = SourceType.DB)
-  @Column(name = "last_update_date", nullable = false)
-  private LocalDateTime lastUpdatedOn;
+  @Column(nullable = false)
+  private LocalDateTime lastUpdateDate;
 
   @Override
   public final boolean equals(Object o) {
@@ -88,6 +88,6 @@ class Employee {
   @Override
   public String toString() {
     return "Employee(id = %s, name = %s, creationDate = %s, lastUpdatedOn = %s)"
-        .formatted(id, name, creationDate, lastUpdatedOn);
+        .formatted(id, name, creationDate, lastUpdateDate);
   }
 }

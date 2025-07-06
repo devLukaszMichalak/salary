@@ -24,16 +24,16 @@ class Agency {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "name", nullable = false, unique = true)
+  @Column(nullable = false, unique = true)
   private String name;
 
   @CreationTimestamp(source = SourceType.DB)
-  @Column(name = "creation_date", nullable = false, updatable = false)
+  @Column(nullable = false, updatable = false)
   private LocalDateTime creationDate;
 
   @UpdateTimestamp(source = SourceType.DB)
-  @Column(name = "last_update_date", nullable = false)
-  private LocalDateTime lastUpdatedOn;
+  @Column(nullable = false)
+  private LocalDateTime lastUpdateDate;
 
   @Override
   public final boolean equals(Object o) {
@@ -65,6 +65,6 @@ class Agency {
   @Override
   public String toString() {
     return "Agency(id = %s, name = %s, creationDate = %s, lastUpdatedOn = %s)"
-        .formatted(id, name, creationDate, lastUpdatedOn);
+        .formatted(id, name, creationDate, lastUpdateDate);
   }
 }

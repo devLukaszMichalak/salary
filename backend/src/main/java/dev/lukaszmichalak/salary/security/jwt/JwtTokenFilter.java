@@ -41,9 +41,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
   }
 
   private Option<String> getAuthToken(HttpServletRequest request) {
-    return Option.of(request)
-        .map(r -> r.getHeader("Authorization"))
-        .flatMap(Option::of)
+    return Option.of(request.getHeader("Authorization"))
         .filter(h -> h.startsWith("Bearer "))
         .map(h -> h.substring(7));
   }

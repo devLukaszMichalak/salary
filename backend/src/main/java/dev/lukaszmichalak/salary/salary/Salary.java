@@ -22,22 +22,22 @@ class Salary {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "year", nullable = false)
+  @Column(nullable = false)
   private int year;
 
-  @Column(name = "yearly_gross_pay", nullable = false)
+  @Column(nullable = false)
   private double yearlyGrossPay;
 
-  @Column(name = "employee_id", nullable = false)
+  @Column(nullable = false)
   private long employeeId;
 
   @CreationTimestamp(source = SourceType.DB)
-  @Column(name = "creation_date", nullable = false, updatable = false)
+  @Column(nullable = false, updatable = false)
   private LocalDateTime creationDate;
 
   @UpdateTimestamp(source = SourceType.DB)
-  @Column(name = "last_update_date", nullable = false)
-  private LocalDateTime lastUpdatedOn;
+  @Column(nullable = false)
+  private LocalDateTime lastUpdateDate;
 
   @Override
   public final boolean equals(Object o) {
@@ -69,6 +69,6 @@ class Salary {
   @Override
   public String toString() {
     return "Salary(id = %s, year = %s, yearlyGrossPay = %s, employeeId = %s, creationDate = %s, lastUpdatedOn = %s)"
-        .formatted(id, year, yearlyGrossPay, employeeId, creationDate, lastUpdatedOn);
+        .formatted(id, year, yearlyGrossPay, employeeId, creationDate, lastUpdateDate);
   }
 }

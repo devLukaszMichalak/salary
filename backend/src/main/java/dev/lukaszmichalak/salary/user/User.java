@@ -29,20 +29,20 @@ class User implements UserDetails {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "email", nullable = false, unique = true)
+  @Column(nullable = false, unique = true)
   private String email;
 
   @Setter(AccessLevel.PACKAGE)
-  @Column(name = "password", nullable = false)
+  @Column(nullable = false)
   private String password;
 
   @CreationTimestamp(source = SourceType.DB)
-  @Column(name = "creation_date", nullable = false, updatable = false)
+  @Column(nullable = false, updatable = false)
   private LocalDateTime creationDate;
 
   @UpdateTimestamp(source = SourceType.DB)
-  @Column(name = "last_update_date", nullable = false)
-  private LocalDateTime lastUpdatedOn;
+  @Column(nullable = false)
+  private LocalDateTime lastUpdateDate;
 
   @Override
   public String getUsername() {
@@ -84,6 +84,6 @@ class User implements UserDetails {
   @Override
   public String toString() {
     return "User(id = %s, email = %s, password = %s, creationDate = %s, lastUpdatedOn = %s)"
-        .formatted(id, email, password, creationDate, lastUpdatedOn);
+        .formatted(id, email, password, creationDate, lastUpdateDate);
   }
 }
