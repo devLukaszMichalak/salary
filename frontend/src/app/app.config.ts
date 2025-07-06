@@ -16,7 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideHotToastConfig({
       dismissible: false,
       style: {
-        backgroundColor: 'var(--color-base-200)',
+        backgroundColor: 'var(--color-base-100)',
         color: 'var(--color-base-content)',
         borderRadius: 'var(--radius-field)'
       },

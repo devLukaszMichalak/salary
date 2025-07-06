@@ -1,4 +1,6 @@
-<form class="flex flex-col gap-4" [formGroup]="criteriaForm">
+<form
+  class="bg-base-100 flex flex-col gap-4 rounded-lg p-4"
+  [formGroup]="criteriaForm">
   <label class="input w-full min-w-min">
     Name:
     <input [formControl]="criteriaForm.controls.name" type="text" />
@@ -7,7 +9,7 @@
     Position title:
     <input [formControl]="criteriaForm.controls.positionTitle" type="text" />
   </label>
-  <label class="input w-full min-w-min">
+  <label class="input border-base-400 w-full min-w-min">
     Agency name:
     <input [formControl]="criteriaForm.controls.agencyName" type="text" />
   </label>

@@ -1,16 +1,60 @@
-<div class="navbar bg-base-200 shadow-sm">
-  <div class="flex-1">
-    <a class="btn btn-ghost text-xl">Salary</a>
+<div class="navbar bg-base-100 shadow-sm">
+  <div class="navbar-start">
+    <div class="dropdown lg:hidden">
+      <div class="btn btn-ghost" tabindex="0" role="button">
+        <ng-icon class="pr-1" size="1.5em" name="heroBars3" />
+      </div>
+      <ul
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+        tabindex="0">
+        <ng-template [ngTemplateOutlet]="menu" />
+      </ul>
+    </div>
+    <a class="btn btn-ghost text-xl" [routerLink]="'/dashboard'">Salary</a>
   </div>
-  <div class="flex-none">
-    <ul class="menu menu-horizontal px-1">
-      <li>
-        <button (click)="swapTheme()">
-          {{ oppositeTheme() | capitalize }} mode
-        </button>
-      </li>
-
-      <li><button (click)="logOut()">Log out</button></li>
+  <div class="navbar-center hidden lg:flex">
+    <ul class="menu menu-horizontal z-10 px-1">
+      <ng-template [ngTemplateOutlet]="menu" />
     </ul>
   </div>
+  <div class="navbar-end">
+    <button class="btn btn-ghost" (click)="swapTheme()">
+      <ng-icon
+        class="pr-1"
+        [name]="isLight() ? 'heroMoon' : 'heroSun'"
+        size="1.2em" />
+      <span class="hidden sm:flex">
+        {{ oppositeTheme() | capitalize }} mode
+      </span>
+    </button>
+    <button class="btn btn-ghost" (click)="logOut()">
+      <ng-icon class="pr-1" size="1.2em" name="heroPower" />
+      <span class="hidden sm:flex">Log out</span>
+    </button>
+  </div>
 </div>
+
+<ng-template #menu>
+  <li>
+    <a [routerLink]="'browser'">
+      <ng-icon class="pr-1" size="1.2em" name="heroMagnifyingGlass" />
+      Browser
+    </a>
+  </li>
+  <li class="lg:hidden">
+    <a>Menu</a>
+    <ng-template [ngTemplateOutlet]="dropdownContent" />
+  </li>
+  <li class="hidden lg:flex">
+    <details>
+      <summary>Menu</summary>
+      <ng-template [ngTemplateOutlet]="dropdownContent" />
+    </details>
+  </li>
+</ng-template>
+
+<ng-template #dropdownContent>
+  <ul class="p-2">
+    <li><a [routerLink]="">Submenu</a></li>
+  </ul>
+</ng-template>

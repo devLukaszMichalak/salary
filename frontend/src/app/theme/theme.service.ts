@@ -21,15 +21,15 @@ export class ThemeService {
     document.documentElement.getAttribute(THEME_ATTRIBUTE) ?? 'light'
   );
 
+  isLight = computed(() => this.#currentTheme() === 'light');
+
   get currentTheme(): Signal<string> {
     return this.#currentTheme.asReadonly();
   }
 
-  get oppositeTheme(): Signal<string> {
-    return computed(() =>
-      this.#currentTheme() === 'light' ? 'dark' : 'light'
-    );
-  }
+  oppositeTheme: Signal<string> = computed(() =>
+    this.isLight() ? 'dark' : 'light'
+  );
 
   swapTheme(): void {
     const oppositeTheme = this.oppositeTheme();
