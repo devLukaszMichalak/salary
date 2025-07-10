@@ -1,4 +1,10 @@
-import { Component, computed, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input
+} from '@angular/core';
 import type { PageMetadata } from '../page';
 import { PageService } from '../page.service';
 
@@ -6,7 +12,8 @@ import { PageService } from '../page.service';
   selector: 'app-pagination',
   imports: [],
   templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.css'
+  styleUrl: './pagination.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaginationComponent {
   #pageService = inject(PageService);

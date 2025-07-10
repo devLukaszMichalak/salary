@@ -1,12 +1,19 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { combineLatest, type Observable, Subject, switchMap } from 'rxjs';
-import type { EmployeeQuery } from '../browser/criteria/employee-query';
-import type { Page } from '../page/page';
-import type { PageQuery } from '../page/page-query';
-import { PageService } from '../page/page.service';
-import type { Employee } from './employee';
+import {
+  combineLatest,
+  map,
+  type Observable,
+  startWith,
+  Subject,
+  switchMap
+} from 'rxjs';
+import type { Page } from '../../page/page';
+import type { PageQuery } from '../../page/page-query';
+import { PageService } from '../../page/page.service';
+import type { Employee } from '../employee';
+import { EmployeeQuery } from './employee-query';
 
 @Injectable()
 export class EmployeeCriteriaService {
@@ -18,17 +25,19 @@ export class EmployeeCriteriaService {
   #getEmployeesByCriteria(
     employeeQuery: EmployeeQuery,
     pageQuery: PageQuery
-  ): Observable<Page<Employee>> {
+  ): Observable<Page<Employee> | undefined> {
     const params = new HttpParams({
       fromObject: { ...employeeQuery, ...pageQuery }
     });
 
-    return this.#httpClient.get<Page<Employee>>('/api/v1/employees/search', {
-      params
-    });
+    return this.#httpClient
+      .get<Page<Employee>>('/api/v1/employees/search', {
+        params
+      })
+      .pipe(startWith(undefined));
   }
 
-  #employeePage$ = combineLatest([
+  employeePage$: Observable<Page<Employee> | undefined> = combineLatest([
     this.#searchSubject$,
     this.#pageService.pageQuery$
   ]).pipe(
@@ -36,9 +45,10 @@ export class EmployeeCriteriaService {
     takeUntilDestroyed()
   );
 
-  get employeePage$(): Observable<Page<Employee>> {
-    return this.#employeePage$;
-  }
+  hasSubmittedCriteria$: Observable<boolean> = this.#searchSubject$.pipe(
+    map(() => true),
+    startWith(false)
+  );
 
   search(query: EmployeeQuery): void {
     this.#searchSubject$.next(query);

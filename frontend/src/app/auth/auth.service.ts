@@ -7,8 +7,7 @@ import {
   type Signal,
   signal
 } from '@angular/core';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { map, type Observable, of, switchMap, tap } from 'rxjs';
+import { map, type Observable, of, tap } from 'rxjs';
 import { TOAST_BYPASS } from '../processing/toast-bypass';
 import type { JwtResponse } from './jwt-response';
 import type { LoginUserCommand } from './login-user-command';
@@ -36,20 +35,14 @@ export class AuthService {
     this.#token.set('');
   }
 
-  get doesTokenExist(): Signal<boolean> {
-    return computed(() => !!this.#token());
-  }
+  doesTokenExist: Signal<boolean> = computed(() => !!this.#token());
 
   get isTokenValid$(): Observable<boolean> {
-    return toObservable(this.doesTokenExist).pipe(
-      switchMap(doesTokenExist => {
-        if (!doesTokenExist) {
-          return of(false);
-        }
+    if (!this.doesTokenExist()) {
+      return of(false);
+    }
 
-        return this.validateToken();
-      })
-    );
+    return this.validateToken();
   }
 
   isEmailTaken(email: string): Observable<boolean> {

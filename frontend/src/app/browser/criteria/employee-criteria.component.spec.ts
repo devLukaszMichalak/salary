@@ -2,17 +2,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { EmployeeCriteriaService } from '../../employee/employee-criteria.service';
 import { PageService } from '../../page/page.service';
-import { CriteriaComponent } from './criteria.component';
+import { EmployeeCriteriaComponent } from './employee-criteria.component';
+import { EmployeeCriteriaService } from './employee-criteria.service';
 
-describe('CriteriaComponent', () => {
-  let component: CriteriaComponent;
-  let fixture: ComponentFixture<CriteriaComponent>;
+describe('EmployeeCriteriaComponent', () => {
+  let component: EmployeeCriteriaComponent;
+  let fixture: ComponentFixture<EmployeeCriteriaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CriteriaComponent],
+      imports: [EmployeeCriteriaComponent],
       providers: [
         EmployeeCriteriaService,
         provideHttpClient(),
@@ -21,7 +21,7 @@ describe('CriteriaComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CriteriaComponent);
+    fixture = TestBed.createComponent(EmployeeCriteriaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

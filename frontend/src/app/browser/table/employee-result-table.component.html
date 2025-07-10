@@ -1,0 +1,23 @@
+<div
+  class="border-base-content/20 bg-base-100 overflow-x-auto rounded-lg border">
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Position title</th>
+        <th>Agency name</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (employee of page().content; track employee.id) {
+        <tr>
+          <th>{{ employee.id }}</th>
+          <td>{{ employee.name }}</td>
+          <td>{{ employee.positionTitle }}</td>
+          <td>{{ employee.agencyName }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

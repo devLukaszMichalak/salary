@@ -1,4 +1,4 @@
-import type { FormGroupRawValue } from '../../common/form-group-raw-value';
-import type { EmployeeCriteriaForm } from './criteria-from-type';
+import type { FormGroupRawValue } from '../../type-utils/form-group-raw-value';
+import type { EmployeeCriteriaForm } from './employee-criteria-from-type';
 
 export type EmployeeQuery = FormGroupRawValue<EmployeeCriteriaForm>;

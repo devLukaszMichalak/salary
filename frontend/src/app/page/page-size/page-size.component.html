@@ -1,0 +1,9 @@
+<div class="flex items-center flex-wrap gap-2">
+  <span>Showing</span>
+  <select class="select w-fit" [(ngModel)]="pageSize" type="number">
+    <option [ngValue]="10">10</option>
+    <option [ngValue]="20">20</option>
+    <option [ngValue]="50">50</option>
+  </select>
+  <span>results</span>
+</div>

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { PageService } from '../page/page.service';
+import { PageService } from '../../page/page.service';
 import { EmployeeCriteriaService } from './employee-criteria.service';
 
 describe('EmployeeCriteriaService', () => {

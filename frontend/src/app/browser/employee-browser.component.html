@@ -1,0 +1,24 @@
+<div class="flex flex-col gap-4 p-4 md:flex-row">
+  <app-employee-criteria class="bg-base-100 h-fit flex-1/5 rounded-lg p-4" />
+
+  <div class="flex-4/5">
+    @let employeePage = employeePage$ | async;
+    @let hasSubmittedCriteria = hasSubmittedCriteria$ | async;
+    @if (employeePage) {
+      <div
+        class="bg-base-100 grid grid-cols-2 grid-rows-2 gap-4 rounded-lg p-4">
+        <app-employee-result-table
+          class="col-span-2 row-span-2"
+          [page]="employeePage" />
+        <app-page-size />
+        <app-pagination class="flex justify-end" [page]="employeePage.page" />
+      </div>
+    } @else {
+      @if (hasSubmittedCriteria) {
+        <div class="bg-base-100 flex justify-center rounded-lg p-4">
+          <app-loading />
+        </div>
+      }
+    }
+  </div>
+</div>

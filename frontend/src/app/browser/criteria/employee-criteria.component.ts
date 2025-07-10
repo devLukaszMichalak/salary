@@ -1,15 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { EmployeeCriteriaService } from '../../employee/employee-criteria.service';
-import type { EmployeeCriteriaForm } from './criteria-from-type';
+import type { EmployeeCriteriaForm } from './employee-criteria-from-type';
+import { EmployeeCriteriaService } from './employee-criteria.service';
 
 @Component({
-  selector: 'app-criteria',
+  selector: 'app-employee-criteria',
   imports: [ReactiveFormsModule],
-  templateUrl: './criteria.component.html',
-  styleUrl: './criteria.component.css'
+  templateUrl: './employee-criteria.component.html',
+  styleUrl: './employee-criteria.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CriteriaComponent {
+export class EmployeeCriteriaComponent {
   #fb = inject(FormBuilder).nonNullable;
   #employeeCriteriaService = inject(EmployeeCriteriaService);
 

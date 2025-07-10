@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -26,7 +26,8 @@ import { ThemeService } from '../theme/theme.service';
     })
   ],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent {
   #themeService = inject(ThemeService);
